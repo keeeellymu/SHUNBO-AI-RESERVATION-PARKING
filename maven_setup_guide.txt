@@ -1,0 +1,23 @@
+# Maven安装与配置指南
+
+## 安装状态
+Maven 3.8.8 已成功下载并安装到：E:\apache-maven-3.8.8
+本地仓库路径：E:\maven-repo
+
+## 手动配置环境变量步骤
+1. 右键点击「此电脑」→ 「属性」→ 「高级系统设置」→ 「环境变量」
+2. 在「系统变量」区域，点击「新建」按钮
+3. 变量名：MAVEN_HOME
+   变量值：E:\apache-maven-3.8.8
+4. 找到「Path」系统变量，点击「编辑」
+5. 点击「新建」，添加：%MAVEN_HOME%\bin
+6. 点击所有「确定」按钮保存设置
+7. 重启命令提示符后，运行 `mvn -v` 验证安装
+
+## 临时使用方法
+在配置环境变量之前，可以通过以下方式临时使用Maven：
+E:\apache-maven-3.8.8\bin\mvn 命令参数
+
+## 下载后端依赖
+在项目根目录执行：
+E:\apache-maven-3.8.8\bin\mvn clean install -DskipTests

@@ -1,0 +1,73 @@
+<!-- 停车场列表页面 -->
+<view class="parking-container">
+  <!-- 搜索栏 -->
+  <view class="search-bar">
+    <view class="search-input-wrapper">
+      <text class="search-icon">🔍</text>
+      <input type="text" placeholder="搜索停车场" bindinput="onSearchInput" value="{{searchKeyword}}"/>
+    </view>
+  </view>
+
+  <!-- 筛选栏 -->
+  <view class="filter-bar">
+    <view class="filter-item {{sortType === 'distance' ? 'active' : ''}}" bindtap="setSortType" data-type="distance">
+      距离优先
+    </view>
+    <view class="filter-item {{sortType === 'price' ? 'active' : ''}}" bindtap="setSortType" data-type="price">
+      价格优先
+    </view>
+    <view class="filter-item {{sortType === 'rating' ? 'active' : ''}}" bindtap="setSortType" data-type="rating">
+      评分优先
+    </view>
+  </view>
+
+  <!-- 区域筛选 -->
+  <view class="area-filter" wx:if="{{areaList.length > 0}}">
+    <view class="area-filter-title">区域筛选：</view>
+    <scroll-view scroll-x="true" class="area-scroll">
+      <view class="area-item {{selectedArea === '' ? 'active' : ''}}" bindtap="setArea" data-area="">
+        全部
+      </view>
+      <view wx:for="{{areaList}}" wx:key="*this" 
+            class="area-item {{selectedArea === item ? 'active' : ''}}" 
+            bindtap="setArea" 
+            data-area="{{item}}">
+        {{item}}
+      </view>
+    </scroll-view>
+  </view>
+
+  <!-- 停车场列表 -->
+  <view class="parking-list">
+    <block wx:if="{{parkingList.length > 0}}">
+      <view class="parking-item" wx:for="{{parkingList}}" wx:key="id" bindtap="navigateToDetail" data-id="{{item.id}}">
+        <view class="parking-image">
+          <image class="parking-img" src="{{item.imageUrl}}" mode="aspectFill" lazy-load="false" webp="false" binderror="onImageError" bindload="onImageLoad" data-index="{{index}}"></image>
+        </view>
+        <view class="parking-info">
+          <view class="parking-name">{{item.name}}</view>
+          <view class="parking-address">{{item.address}}</view>
+          <view class="parking-details">
+            <view class="distance">{{item.distance}}km</view>
+            <view class="area">{{item.area}}</view>
+            <view class="price">¥{{item.price}}元/小时</view>
+            <view class="rating">⭐ {{item.rating}}</view>
+          </view>
+          <view class="available-spots">
+            <text class="available-count">{{item.availableSpaces || item.availableSpots || 0}}</text>
+            <text class="available-label">个空余车位</text>
+          </view>
+        </view>
+      </view>
+    </block>
+    <view wx:else class="empty-state">
+      <text>暂无停车场数据</text>
+    </view>
+  </view>
+
+  <!-- 加载更多 -->
+  <view class="load-more" wx:if="{{hasMore}}">
+    <text wx:if="{{loading}}">加载中...</text>
+    <text wx:else bindtap="loadMore">点击加载更多</text>
+  </view>
+</view>

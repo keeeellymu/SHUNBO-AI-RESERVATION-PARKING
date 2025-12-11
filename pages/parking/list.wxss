@@ -1,0 +1,77 @@
+/* pages/parking/list.wxss */
+.container {
+  padding: 16rpx;
+  background-color: #f5f5f5;
+  min-height: 100vh; /* 铺满屏幕，避免空白 */
+}
+
+.title {
+  font-size: 36rpx;
+  font-weight: bold;
+  margin: 20rpx 0;
+}
+
+.loading, .error, .empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 200rpx;
+  color: #666;
+}
+
+/* 自定义加载动画 */
+.loading-spinner {
+  width: 60rpx;
+  height: 60rpx;
+  border: 6rpx solid #f3f3f3;
+  border-top: 6rpx solid #1890ff;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-bottom: 20rpx;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.error button {
+  margin-top: 20rpx;
+  background-color: #1677ff;
+  color: white;
+}
+
+.parking-list {
+  margin-top: 20rpx;
+}
+
+.parking-item {
+  background-color: white;
+  border-radius: 16rpx;
+  padding: 20rpx;
+  margin-bottom: 16rpx;
+  box-shadow: 0 2rpx 8rpx rgba(0,0,0,0.1);
+}
+
+.parking-name {
+  font-size: 32rpx;
+  font-weight: 500;
+  margin-bottom: 10rpx;
+}
+
+.parking-info {
+  display: flex;
+  justify-content: space-between;
+  font-size: 26rpx;
+  color: #666;
+  margin-bottom: 10rpx;
+}
+
+.available {
+  color: #00b42a; /* 可用车位绿色 */
+}
+
+.parking-address {
+  font-size: 24rpx;
+  color: #999;
+}

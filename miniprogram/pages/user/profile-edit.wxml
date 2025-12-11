@@ -1,0 +1,55 @@
+<view class="edit-page">
+  <view class="card">
+    <view class="avatar-row">
+      <view class="avatar-label">头像</view>
+      <view class="avatar-box" bindtap="onChooseAvatar">
+        <image class="avatar-img" src="{{form.avatarUrl || '/images/my.png'}}" mode="aspectFill"></image>
+        <text class="avatar-tip">点击更换</text>
+      </view>
+    </view>
+
+    <view class="form-row">
+      <view class="form-label">昵称</view>
+      <input
+        class="form-input"
+        placeholder="请输入昵称"
+        value="{{form.nickName}}"
+        maxlength="20"
+        bindinput="onNickNameInput"
+        adjust-position="false"
+        cursor-spacing="12"
+      />
+    </view>
+
+    <view class="form-row">
+      <view class="form-label">联系电话</view>
+      <input
+        class="form-input"
+        type="number"
+        placeholder="请输入联系电话"
+        value="{{form.phone}}"
+        maxlength="11"
+        bindinput="onPhoneInput"
+        adjust-position="false"
+        cursor-spacing="12"
+      />
+    </view>
+
+    <view class="form-row">
+      <view class="form-label">用户 ID</view>
+      <view class="form-static">{{form.id || '自动分配'}}</view>
+    </view>
+  </view>
+
+  <view class="tips">
+    <text>• 头像和昵称仅用于在本小程序中展示，不会对您的微信头像和昵称造成影响。</text>
+    <text>• 联系电话将用于语音预约功能，请确保信息准确。</text>
+    <text>• 车牌号请在"我的车牌"页面进行设置。</text>
+  </view>
+
+  <view class="bottom-bar">
+    <button class="save-btn" bindtap="onSave" loading="{{saving}}">保存</button>
+  </view>
+</view>
+
+

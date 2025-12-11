@@ -1,0 +1,37 @@
+<view class="favorites-page">
+  <!-- 空状态 -->
+  <view class="empty" wx:if="{{favorites.length === 0}}">
+    <view class="empty-icon">🅿️</view>
+    <text class="empty-text">还没有收藏任何停车场</text>
+    <text class="empty-hint">去停车场列表浏览并点击“收藏”吧</text>
+  </view>
+
+  <!-- 收藏列表 -->
+  <scroll-view class="favorites-list" scroll-y="true" wx:else>
+    <block wx:for="{{favorites}}" wx:key="id">
+      <view class="favorite-card">
+        <view class="card-main" bindtap="goToParkingDetail" data-id="{{item.id}}">
+          <image class="card-image" src="{{item.imageUrl || '/images/parking.png'}}" mode="aspectFill"></image>
+          <view class="card-content">
+            <view class="card-header">
+              <text class="card-title">{{item.name}}</text>
+              <view class="tag-area" wx:if="{{item.area}}">
+                <text class="tag">{{item.area}}</text>
+              </view>
+            </view>
+            <view class="card-address">{{item.address}}</view>
+            <view class="card-meta">
+              <text class="meta-text">¥{{item.pricePerHour || 0}}/小时</text>
+              <text class="meta-text">剩余 {{item.availableSpaces || 0}} / {{item.totalSpaces || 0}}</text>
+            </view>
+          </view>
+        </view>
+        <view class="card-actions">
+          <button class="unfavorite-btn" bindtap="removeFavorite" data-id="{{item.id}}">取消收藏</button>
+        </view>
+      </view>
+    </block>
+  </scroll-view>
+</view>
+
+

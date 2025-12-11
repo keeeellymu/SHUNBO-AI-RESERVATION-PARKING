@@ -1,0 +1,92 @@
+<view class="container">
+  <!-- 加载状态 -->
+  <view class="loading" wx:if="{{loading}}">
+    <view class="loading-spinner"></view>
+    <text class="loading-text">加载中...</text>
+  </view>
+
+  <!-- 车牌列表 -->
+  <view wx:else class="vehicles-content">
+    <!-- 车牌列表 -->
+    <view class="vehicles-list" wx:if="{{vehicles.length > 0}}">
+      <view class="vehicle-card" wx:for="{{vehicles}}" wx:key="id">
+        <view class="vehicle-main" bindtap="setDefault" data-id="{{item.id}}">
+          <view class="vehicle-info">
+            <view class="plate-number">{{item.plateNumber}}</view>
+            <view class="vehicle-meta">
+              <text class="vehicle-type">{{item.type || '小型轿车'}}</text>
+              <text class="default-tag" wx:if="{{item.isDefault}}">默认</text>
+            </view>
+          </view>
+          <view class="vehicle-actions">
+            <view class="action-btn edit-btn" catchtap="editVehicle" data-id="{{item.id}}" data-index="{{index}}">
+              <text>编辑</text>
+            </view>
+            <view class="action-btn delete-btn" catchtap="deleteVehicle" data-id="{{item.id}}" data-index="{{index}}">
+              <text>删除</text>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 空状态 -->
+    <view class="empty-state" wx:else>
+      <view class="empty-icon">🚗</view>
+      <text class="empty-text">暂无车牌信息</text>
+      <text class="empty-hint">点击下方按钮添加车牌</text>
+    </view>
+
+    <!-- 添加车牌按钮 -->
+    <view class="add-button-container">
+      <button class="add-btn" bindtap="addVehicle">
+        <text class="add-icon">+</text>
+        <text>添加车牌</text>
+      </button>
+    </view>
+  </view>
+
+  <!-- 添加/编辑车牌弹窗 -->
+  <view class="modal-overlay" wx:if="{{showModal}}" bindtap="closeModal">
+    <view class="modal-content" catchtap="stopPropagation">
+      <view class="modal-header">
+        <text class="modal-title">{{editingIndex >= 0 ? '编辑车牌' : '添加车牌'}}</text>
+        <text class="modal-close" bindtap="closeModal">×</text>
+      </view>
+      
+      <view class="modal-body">
+        <view class="form-item">
+          <text class="form-label">车牌号</text>
+          <input 
+            class="form-input" 
+            type="text" 
+            placeholder="请输入车牌号（如：粤A12345）" 
+            value="{{formData.plateNumber}}"
+            bindinput="onPlateNumberInput"
+            maxlength="10"
+          />
+        </view>
+        
+        <view class="form-item">
+          <text class="form-label">车辆类型</text>
+          <picker 
+            mode="selector" 
+            range="{{vehicleTypes}}" 
+            value="{{vehicleTypeIndex}}"
+            bindchange="onVehicleTypeChange">
+            <view class="form-picker">
+              <text>{{formData.type || '请选择车辆类型'}}</text>
+              <text class="arrow-icon">></text>
+            </view>
+          </picker>
+        </view>
+      </view>
+      
+      <view class="modal-footer">
+        <button class="modal-btn cancel-btn" bindtap="closeModal">取消</button>
+        <button class="modal-btn confirm-btn" bindtap="saveVehicle">保存</button>
+      </view>
+    </view>
+  </view>
+</view>
+

@@ -1,0 +1,303 @@
+/* pages/reservation/detail.wxss - Glassmorphism Design Style */
+
+.container {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #f5f5f7 0%, #ffffff 100%);
+  background-attachment: fixed;
+  padding: 16px;
+  padding-bottom: 80px;
+  box-sizing: border-box;
+}
+
+/* 加载状态样式 - Glassmorphism */
+.loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  z-index: 999;
+}
+
+.loading-spinner {
+  width: 36px;
+  height: 36px;
+  margin: 0 auto 16px;
+  border: 3px solid rgba(26, 26, 26, 0.2);
+  border-top-color: #4A90E2;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.loading text {
+  font-size: 14px;
+  color: rgba(26, 26, 26, 0.7);
+}
+
+/* 错误状态样式 - Glassmorphism */
+.error {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 64px 0;
+  text-align: center;
+  background: transparent;
+}
+
+.error text {
+  font-size: 14px;
+  color: #ff4d4f;
+  margin-bottom: 16px;
+  display: block;
+}
+
+.retry-btn {
+  background: rgba(74, 144, 226, 0.7);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  color: #ffffff;
+  font-size: 14px;
+  padding: 0 24px;
+  border-radius: 12px;
+  border: 1px solid rgba(74, 144, 226, 0.3);
+  margin-top: 16px;
+}
+
+.detail-container {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-radius: 16px;
+  padding: 24px;
+  margin: 16px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.08);
+}
+
+/* 状态卡片 - Glassmorphism */
+.status-card {
+  padding: 24px;
+  border-radius: 16px;
+  margin-bottom: 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.06);
+}
+
+/* 倒计时框样式 - Glassmorphism */
+.countdown-box {
+  background: rgba(255, 193, 7, 0.15);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 193, 7, 0.3);
+  border-radius: 16px;
+  padding: 24px;
+  margin-bottom: 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  box-shadow: 0 2px 8px 0 rgba(255, 193, 7, 0.2);
+}
+
+.countdown-label {
+  font-size: 13px;
+  color: rgba(26, 26, 26, 0.7);
+  text-align: center;
+  line-height: 1.5;
+}
+
+.countdown-time {
+  font-size: 48px;
+  font-weight: 700;
+  color: #ff9800;
+  font-family: 'Courier New', monospace;
+  letter-spacing: 2px;
+}
+
+.status-text {
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.payment-status {
+  font-size: 14px;
+  padding: 4px 12px;
+  border-radius: 12px;
+  background-color: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+/* 信息区块 - Glassmorphism */
+.section {
+  margin-bottom: 24px;
+  background: rgba(255, 255, 255, 0.5);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-radius: 16px;
+  padding: 20px;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.section-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: #1a1a1a;
+}
+
+.section-header {
+  margin-bottom: 16px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.info-item {
+  display: flex;
+  padding: 12px 0;
+  font-size: 14px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.info-item:last-child {
+  border-bottom: none;
+}
+
+.label {
+  color: rgba(26, 26, 26, 0.6);
+  width: 30%;
+  font-weight: 500;
+}
+
+.value {
+  color: #1a1a1a;
+  flex: 1;
+  font-weight: 400;
+}
+
+.price {
+  color: #f53f3f;
+  font-weight: 600;
+}
+
+/* 操作按钮 - Glassmorphism */
+.action-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+.pay-btn, .cancel-btn, .back-btn, .complete-btn, .navigate-btn {
+  padding: 14px 0;
+  font-size: 16px;
+  border-radius: 12px;
+  border: none;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.pay-btn {
+  background: rgba(74, 144, 226, 0.8);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  color: white;
+  border: 1px solid rgba(74, 144, 226, 0.3);
+}
+
+.pay-btn:active {
+  background: rgba(74, 144, 226, 1);
+  transform: scale(0.98);
+}
+
+.cancel-btn, .back-btn, .navigate-btn {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  color: #666;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.cancel-btn:active, .back-btn:active, .navigate-btn:active {
+  background: rgba(255, 255, 255, 0.9);
+  transform: scale(0.98);
+}
+
+/* 结束订单按钮 - 更突出但保持柔和风格 */
+.complete-btn {
+  background: linear-gradient(90deg, #ff9f43, #ff6b6b);
+  color: #ffffff;
+  border: none;
+  box-shadow: 0 4px 12px rgba(255, 107, 107, 0.35);
+}
+
+.complete-btn:active {
+  transform: scale(0.98);
+  box-shadow: 0 2px 8px rgba(255, 107, 107, 0.25);
+}
+
+/* 预约信息标题区域 */
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+/* 小导航按钮 - 位于预约信息标题旁边 */
+.navigate-button-small {
+  padding: 6px 12px;
+  border-radius: 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #e6f4ff;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(22, 119, 255, 0.2);
+  box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease;
+}
+
+.navigate-button-small:active {
+  background: #d4e8ff;
+  transform: scale(0.95);
+}
+
+.navigate-text-small {
+  font-size: 12px;
+  font-weight: 500;
+  color: #1677ff;
+  text-align: center;
+}
+
+/* 响应式调整 */
+@media screen and (min-width: 768px) {
+  .container {
+    padding: 24px;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  
+  .detail-container {
+    padding: 32px;
+  }
+}

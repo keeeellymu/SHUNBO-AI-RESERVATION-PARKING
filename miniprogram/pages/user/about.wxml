@@ -1,0 +1,97 @@
+<view class="about-page">
+  <view class="hero-card">
+    <view class="hero-title">瞬泊智能停车场</view>
+    <view class="hero-subtitle">轻松找位 · 一键预约 · 智能出行</view>
+    <view class="hero-tags">
+      <text class="tag">实时车位</text>
+      <text class="tag">在线预约</text>
+      <text class="tag">车牌管理</text>
+      <text class="tag">智能客服</text>
+    </view>
+  </view>
+
+  <view class="section-card">
+    <view class="section-title">系统简介</view>
+    <view class="section-content">
+      <text>「瞬泊」是面向城市停车场场景打造的一款智能停车小程序，帮助您快速查找附近停车场、在线预约车位，并管理自己的车牌信息，减少找车位和排队缴费的时间。</text>
+    </view>
+  </view>
+
+  <view class="section-card">
+    <view class="section-title">主要功能</view>
+    <view class="section-content">
+      <view class="feature-item">
+        <view class="feature-dot"></view>
+        <view class="feature-text">
+          <view class="feature-title">停车场列表与筛选</view>
+          <view class="feature-desc">在「停车场」页面按区域查看停车场列表，支持按照距离、价格等维度浏览，并查看停车场详情、剩余车位等信息。</view>
+        </view>
+      </view>
+      <view class="feature-item">
+        <view class="feature-dot"></view>
+        <view class="feature-text">
+          <view class="feature-title">在线预约车位</view>
+          <view class="feature-desc">在停车场详情页选择车位和时间，一键提交预约，系统会为您保留车位，并在预约详情中展示状态与倒计时。</view>
+        </view>
+      </view>
+      <view class="feature-item">
+        <view class="feature-dot"></view>
+        <view class="feature-text">
+          <view class="feature-title">我的车牌管理</view>
+          <view class="feature-desc">在「我的车牌」中可以添加、编辑、删除车牌，并设置默认车牌。预约时可以直接选择已保存的车牌，提高填写效率。</view>
+        </view>
+      </view>
+      <view class="feature-item">
+        <view class="feature-dot"></view>
+        <view class="feature-text">
+          <view class="feature-title">我的预约</view>
+          <view class="feature-desc">在「我的」→「我的预约」中查看历史预约记录，了解每次预约的停车场、车位、时间和状态，并支持查看详情、取消预约等操作。</view>
+        </view>
+      </view>
+      <view class="feature-item">
+        <view class="feature-dot"></view>
+        <view class="feature-text">
+          <view class="feature-title">在线客服「小波」</view>
+          <view class="feature-desc">在「在线客服」中向智能客服「小波」咨询停车场、预约、支付和车牌相关问题，获取实时帮助。</view>
+        </view>
+      </view>
+      <view class="feature-item">
+        <view class="feature-dot"></view>
+        <view class="feature-text">
+          <view class="feature-title">语音预约（试验功能）</view>
+          <view class="feature-desc">在「语音助手」中通过语音说出目的地或停车需求，系统会帮助识别意图并尝试为您匹配合适的停车场与车位。</view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <view class="section-card">
+    <view class="section-title">常见问题问答</view>
+    <view class="qa-item">
+      <view class="qa-q">Q1 · 怎么预约一个车位？</view>
+      <view class="qa-a">A：在底部导航选择「停车场」，挑选一个停车场并进入详情页，选择车位和时间，确认信息后点击提交即可完成预约。</view>
+    </view>
+    <view class="qa-item">
+      <view class="qa-q">Q2 · 预约成功后在哪儿查看？</view>
+      <view class="qa-a">A：在「我的」页面进入「我的预约」，即可查看所有预约记录和每条预约的详细状态。</view>
+    </view>
+    <view class="qa-item">
+      <view class="qa-q">Q3 · 可以修改或取消预约吗？</view>
+      <view class="qa-a">A：在预约详情中，根据当前状态支持取消预约或完成预约。对于已超时或已完成的预约，将不支持再次修改。</view>
+    </view>
+    <view class="qa-item">
+      <view class="qa-q">Q4 · 为什么我的车牌没有自动带入？</view>
+      <view class="qa-a">A：请先在「我的」→「我的车牌」中添加并保存车牌信息。预约时可以从车牌列表中选择需要使用的车牌。</view>
+    </view>
+    <view class="qa-item">
+      <view class="qa-q">Q5 · 支付或网络出现问题怎么办？</view>
+      <view class="qa-a">A：建议先检查网络状况并重试；如果问题仍然存在，可以在「在线客服」中联系智能客服「小波」获取进一步帮助。</view>
+    </view>
+  </view>
+
+  <view class="footer">
+    <text>当前版本：v1.0.0 · 本页面内容仅作产品介绍与指引使用</text>
+  </view>
+</view>
+
+

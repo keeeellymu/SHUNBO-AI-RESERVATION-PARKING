@@ -1,0 +1,29 @@
+<view class="chat-page">
+  <scroll-view class="chat-window" scroll-y="true" scroll-with-animation="true" scroll-top="{{scrollTop}}">
+    <block wx:for="{{messages}}" wx:key="index">
+      <!-- 不在界面上展示 system 提示词，只给大模型用 -->
+      <view wx:if="{{item.role !== 'system'}}" class="msg-item {{item.role === 'user' ? 'msg-user' : 'msg-bot'}}">
+        <view class="msg-bubble">
+          <text>{{item.content}}</text>
+        </view>
+      </view>
+    </block>
+  </scroll-view>
+
+  <view class="input-bar">
+    <input
+      class="msg-input"
+      placeholder="请描述您的停车或预约问题～"
+      confirm-type="send"
+      value="{{inputValue}}"
+      bindinput="onInputChange"
+      bindconfirm="onSend"
+      disabled="{{loading}}"
+    />
+    <button class="send-btn" bindtap="onSend" loading="{{loading}}" disabled="{{!inputValue || loading}}">
+      发送
+    </button>
+  </view>
+</view>
+
+

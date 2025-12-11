@@ -1,0 +1,58 @@
+<!-- pages/reservation/index.wxml -->
+<view class="container">
+  <view class="header">
+    <text class="title">我的预约</text>
+    <view class="clear-button" wx:if="{{!loading && !error && !empty && hasCompletedOrCancelled}}" bindtap="clearCompletedReservations">
+      <text class="clear-button-text">清空记录</text>
+    </view>
+  </view>
+
+  <!-- 加载中状态 -->
+  <view class="loading-container" wx:if="{{loading}}">
+    <view class="loading-spinner"></view>
+    <text class="loading-text">加载中...</text>
+  </view>
+
+  <!-- 错误状态 -->
+  <view class="error-container" wx:elif="{{error}}">
+    <image class="error-image" src="/images/error.svg" mode="aspectFit"></image>
+    <text class="error-text">{{errorMsg}}</text>
+    <button class="retry-button" bindtap="refreshData">重试</button>
+  </view>
+
+  <!-- 无预约记录状态 -->
+  <view class="empty-container" wx:elif="{{empty}}">
+    <image class="empty-image" src="/images/logo.svg" mode="aspectFit"></image>
+    <text class="empty-text">暂无预约记录</text>
+    <button class="primary-button" bindtap="goToParkingList">去预约</button>
+  </view>
+
+  <!-- 预约记录列表 -->
+  <view class="reservation-list" wx:else>
+    <block wx:for="{{reservationList}}" wx:key="id">
+      <view class="reservation-item" bindtap="viewReservationDetail" data-id="{{item.id}}">
+        <view class="item-header">
+          <text class="parking-name">{{item.parkingName}}</text>
+          <view class="status-tag" data-status="{{item.status}}">
+            <text class="status-text">{{item.status}}</text>
+          </view>
+        </view>
+        
+        <view class="item-content">
+          <view class="info-row">
+            <text class="label">车位号：</text>
+            <text class="value">{{item.spaceNumber}}</text>
+          </view>
+          <view class="info-row">
+            <text class="label">预约时间：</text>
+            <text class="value">{{item.reserveTime}}</text>
+          </view>
+        </view>
+        
+        <view class="item-footer">
+          <text class="view-detail">查看详情 ></text>
+        </view>
+      </view>
+    </block>
+  </view>
+</view>

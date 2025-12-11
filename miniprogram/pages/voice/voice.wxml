@@ -1,0 +1,50 @@
+<!--pages/voice/voice.wxml-->
+<view class="container">
+  <view class="header">
+    <text class="title">智能语音预约</text>
+    <text class="subtitle">按住按钮说话，说出您的需求</text>
+  </view>
+
+  <view class="recognition-area">
+    <view class="text-display">
+      <text class="label">识别文本：</text>
+      <text class="text-content">{{recognitionText || '等待识别...'}}</text>
+    </view>
+    
+    <view class="result-area" wx:if="{{result}}">
+      <text class="result-label">处理结果：</text>
+      <text class="result-message">{{result.message}}</text>
+      <view class="result-data" wx:if="{{result.data}}">
+        <text class="data-label">数据：</text>
+        <text class="data-content">{{result.data}}</text>
+      </view>
+    </view>
+    
+    <view class="error-area" wx:if="{{error}}">
+      <text class="error-message">错误：{{error}}</text>
+    </view>
+  </view>
+
+  <view class="button-area">
+    <view class="record-button-wrapper">
+      <button 
+        class="record-button {{isRecording ? 'recording' : ''}}"
+        bindtouchstart="onStartRecord"
+        bindtouchend="onStopRecord"
+        bindtouchcancel="onCancelRecord"
+        disabled="{{isRecording && false}}"
+      >
+        <text class="button-text">{{isRecording ? '正在录音...' : '按住说话'}}</text>
+      </button>
+    </view>
+  </view>
+
+  <view class="tips">
+    <text class="tips-title">使用提示：</text>
+    <text class="tips-content">• 可以说"预约北京路附近的停车场"</text>
+    <text class="tips-content">• 可以说"附近有什么停车场"</text>
+    <text class="tips-content">• 可以说"导航到北京路"</text>
+    <text class="tips-content">• 可以说"取消预约"</text>
+  </view>
+</view>
+

@@ -1,0 +1,17 @@
+<svg width="120" height="120" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <circle cx="60" cy="60" r="55" fill="#1AAD19" stroke="#0E860E" stroke-width="2">
+    <animate attributeName="r" values="55;58;55" dur="2s" repeatCount="indefinite"/>
+  </circle>
+  <rect x="40" y="30" width="40" height="60" rx="5" fill="#0066CC" stroke="#004080" stroke-width="1">
+    <animate attributeName="opacity" values="0.9;1;0.9" dur="1.5s" repeatCount="indefinite"/>
+  </rect>
+  <rect x="45" y="35" width="30" height="10" rx="2" fill="#FF6B35">
+    <animate attributeName="y" values="35;34;35" dur="1s" repeatCount="indefinite"/>
+  </rect>
+  <rect x="55" y="50" width="10" height="20" fill="#FFC107">
+    <animate attributeName="height" values="20;21;20" dur="1.2s" repeatCount="indefinite"/>
+  </rect>
+  <rect x="45" y="75" width="30" height="5" rx="2" fill="#00C853">
+    <animate attributeName="width" values="30;31;30" dur="1.3s" repeatCount="indefinite"/>
+  </rect>
+</svg>

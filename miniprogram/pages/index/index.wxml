@@ -1,0 +1,209 @@
+<!-- pages/index/index.wxml -->
+<view class="container">
+  <!-- 顶部搜索栏 -->
+  <view class="search-bar">
+    <view class="search-input">
+      <input 
+        class="search-input-field" 
+        placeholder="搜索停车场" 
+        value="{{searchKeyword}}"
+        bindinput="onSearchInput"
+        bindconfirm="onSearchConfirm"
+        confirm-type="search"
+        focus="{{isSearchFocused}}"
+      />
+      <text class="icon-clear" wx:if="{{searchKeyword}}" bindtap="clearSearch">×</text>
+      <!-- 语音按钮 -->
+      <view class="voice-btn" bindtap="startVoiceRecognition">
+        <image class="voice-icon" src="/images/icon-robot.svg" mode="aspectFit"></image>
+      </view>
+    </view>
+  </view>
+  
+  <!-- 语音识别浮层 -->
+  <view class="voice-modal" wx:if="{{showVoiceModal}}" bindtap="closeVoiceModal">
+    <view class="voice-modal-content" catchtap="stopPropagation">
+      <view class="voice-header">
+        <text class="voice-title">智能语音助手</text>
+        <text class="voice-close" bindtap="closeVoiceModal">×</text>
+      </view>
+      
+      <view class="voice-recording-area">
+        <view class="voice-recording-circle">
+          <image class="bobo-svg {{isRecording ? 'recording' : ''}}" src="/images/bobo-smile.svg" mode="aspectFit"></image>
+          <text class="voice-recording-text">{{isRecording ? '正在录音...' : '点击开始说话'}}</text>
+        </view>
+        <view class="voice-recognition-text" wx:if="{{recognitionText}}">
+          <text class="recognition-label">识别结果：</text>
+          <text class="recognition-content">{{recognitionText}}</text>
+        </view>
+      </view>
+      
+      <view class="voice-controls">
+        <button 
+          class="voice-control-btn {{isRecording ? 'recording' : ''}}"
+          bindtouchstart="onStartRecord"
+          bindtouchend="onStopRecord"
+          bindtouchcancel="onCancelRecord"
+        >
+          <text class="btn-text">{{isRecording ? '松开结束' : '按住说话'}}</text>
+        </button>
+      </view>
+      
+      <view class="voice-result" wx:if="{{voiceResult}}">
+        <text class="result-label">处理结果：</text>
+        <text class="result-message">{{voiceResult.message}}</text>
+        <view class="result-actions" wx:if="{{voiceResult.commandType === 'reserve' && voiceResult.data && voiceResult.data.parkings}}">
+          <button class="action-btn" bindtap="goToParkingList">查看停车场</button>
+        </view>
+      </view>
+      
+      <view class="voice-tips">
+        <text class="tips-title">💡 使用提示</text>
+        <text class="tip-item">• 说"预约北京路附近的停车场"</text>
+        <text class="tip-item">• 说"附近有什么停车场"</text>
+        <text class="tip-item">• 说"导航到北京路"</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 搜索结果列表 -->
+  <view class="search-results" wx:if="{{showSearchResults}}">
+    <view class="search-results-header">
+      <text class="results-count">找到 {{searchResults.length}} 个结果</text>
+      <text class="close-results" bindtap="closeSearchResults">关闭</text>
+    </view>
+    <scroll-view scroll-y="true" class="search-results-list">
+      <view 
+        wx:for="{{searchResults}}" 
+        wx:key="id" 
+        class="search-result-item"
+        bindtap="navigateToDetail"
+        data-id="{{item.id}}"
+      >
+        <view class="result-name">{{item.name}}</view>
+        <view class="result-address">{{item.address}}</view>
+        <view class="result-meta">
+          <text class="result-price">¥{{item.hourlyRate || 0}}/小时</text>
+          <text class="result-spaces">剩余{{item.availableSpaces || 0}}个车位</text>
+        </view>
+      </view>
+      <view class="empty-search" wx:if="{{searchResults.length === 0}}">
+        <text>未找到相关停车场</text>
+      </view>
+    </scroll-view>
+  </view>
+
+  <!-- 地图模块 -->
+  <view class="map-container">
+    <map
+      id="parkingMap"
+      longitude="{{longitude}}"
+      latitude="{{latitude}}"
+      scale="15"
+      markers="{{markers}}"
+      covers="{{covers}}"
+      show-location
+      bindmarkertap="onMarkerTap"
+      style="width: 100%; height: 100%;"
+    >
+    </map>
+    
+    <!-- 地图控制按钮 -->
+  <view class="map-controls">
+    <button class="control-btn" bindtap="locateMe">
+      <text class="control-icon">定位</text>
+    </button>
+  </view>
+</view>
+
+<!-- 最新预约模块 -->
+<view class="latest-reservation-section">
+  <view class="reservation-header">
+    <text class="reservation-title">最新预约</text>
+    <text class="view-all-link" bindtap="goToReservationList">查看全部</text>
+  </view>
+  
+  <!-- 预约详情卡片 -->
+  <view class="reservation-card" wx:if="{{latestReservation}}" bindtap="navigateToReservationDetail" data-id="{{latestReservation.id}}">
+    <view class="reservation-content">
+      <!-- 缩略图 -->
+      <image class="reservation-thumbnail" wx:if="{{latestReservation.thumbnail}}" src="{{latestReservation.thumbnail}}" mode="aspectFill"></image>
+      <view class="reservation-thumbnail-placeholder" wx:else>
+        <text class="placeholder-icon">🅿️</text>
+      </view>
+      
+      <!-- 预约信息 -->
+      <view class="reservation-info">
+        <view class="reservation-header-info">
+          <text class="parking-lot-name">{{latestReservation.parkingName}}</text>
+          <view class="status-tag {{latestReservation.statusClass}}">
+            <text class="status-text">{{latestReservation.status}}</text>
+          </view>
+        </view>
+        
+        <view class="reservation-detail-row">
+          <text class="detail-text">{{latestReservation.dateTime}}</text>
+        </view>
+        
+        <view class="reservation-detail-row">
+          <text class="detail-text">车位号: {{latestReservation.spaceNumber || '未知车位'}}</text>
+          <text class="reservation-price">¥{{latestReservation.price || '0.00'}}</text>
+        </view>
+      </view>
+    </view>
+    
+    <!-- 操作按钮 -->
+    <view class="reservation-actions" catchtap="stopPropagation">
+      <button class="primary-action-btn" bindtap="unlockSpace" data-id="{{latestReservation.id}}" wx:if="{{latestReservation.status === '待使用' && !latestReservation.isUnlocked}}">立即解锁</button>
+      <view class="primary-action-btn unlocked-btn" wx:if="{{latestReservation.isUnlocked || latestReservation.status === '使用中'}}">已解锁</view>
+      <view class="secondary-actions">
+        <button class="secondary-btn cancel-btn" bindtap="cancelReservation" data-id="{{latestReservation.id}}" wx:if="{{latestReservation.status === '待使用' && !latestReservation.isUnlocked}}">取消预约</button>
+        <button class="secondary-btn navigate-btn" bindtap="navigateToParking" data-id="{{latestReservation.id}}">导航前往</button>
+      </view>
+    </view>
+  </view>
+  
+  <!-- 无预约状态 -->
+  <view class="no-reservation" wx:else>
+    <text class="no-reservation-text">暂无预约记录</text>
+    <button class="go-reserve-btn" bindtap="goToParkingList">去预约</button>
+  </view>
+</view>
+
+  <!-- 推荐停车场 -->
+  <view class="section">
+    <view class="section-header">
+      <text class="section-title">推荐停车场</text>
+      <view class="section-more" bindtap="goToParkingList">
+        <text>查看更多</text>
+        <text class="icon-arrow">›</text>
+      </view>
+    </view>
+    
+    <view class="parking-list">
+      <block wx:for="{{recommendedParkings}}" wx:key="id">
+        <view class="parking-item" bindtap="navigateToDetail" data-id="{{item.id}}">
+          <view class="parking-info-container">
+            <view class="parking-name">{{item.name}}</view>
+            <view class="parking-address">{{item.address}}</view>
+            <view class="parking-meta">
+              <text class="distance">{{item.distance}}m</text>
+              <text class="price">¥{{item.pricePerHour}}/小时</text>
+            </view>
+          </view>
+          <view class="parking-status">
+            <view class="status-dot" style="background-color: {{item.availableSpaces > 0 ? '#52c41a' : '#ff4d4f'}}"></view>
+            <text class="status-text">{{item.availableSpaces > 0 ? '有车位' : '满位'}}</text>
+          </view>
+        </view>
+      </block>
+    </view>
+  </view>
+
+  <!-- 公告栏 -->
+  <view class="notice">
+    <text class="notice-icon">公告</text>
+    <text class="notice-text">{{announcement}}</text>
+  </view>
+</view>

@@ -1,0 +1,304 @@
+/* app.wxss - Glassmorphism Design Style */
+
+/* ============================================
+   Glassmorphism Design System
+   ============================================ */
+
+/* Colors - Glassmorphism Palette (White Theme) */
+/* Primary Glass: rgba(255, 255, 255, 0.7) - rgba(255, 255, 255, 0.5) */
+/* Glass Border: rgba(0, 0, 0, 0.1) */
+/* Glass Shadow: rgba(0, 0, 0, 0.1) */
+/* Background: White to Light Gray Gradient */
+
+/* ============================================
+   Global Styles
+   ============================================ */
+page {
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Helvetica Neue', Arial, sans-serif;
+  font-size: 15px;
+  line-height: 1.47059;
+  color: #1a1a1a;
+  background: linear-gradient(135deg, #f5f5f7 0%, #ffffff 100%);
+  background-attachment: fixed;
+  min-height: 100vh;
+  padding-bottom: 60px; /* 为底部导航栏留出空间 */
+  box-sizing: border-box;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  letter-spacing: -0.01em;
+}
+
+/* ============================================
+   Reset Styles
+   ============================================ */
+page,
+view,
+text,
+image,
+scroll-view,
+swiper,
+button,
+input,
+form,
+navigator {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* ============================================
+   Common Utility Classes
+   ============================================ */
+.container {
+  padding: 16px;
+  box-sizing: border-box;
+}
+
+/* Flexbox Utilities */
+.flex {
+  display: flex;
+}
+
+.flex-column {
+  flex-direction: column;
+}
+
+.flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.flex-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* Spacing Utilities */
+.mt-xs { margin-top: 4px; }
+.mt-sm { margin-top: 8px; }
+.mt-md { margin-top: 16px; }
+.mt-lg { margin-top: 24px; }
+
+.mb-xs { margin-bottom: 4px; }
+.mb-sm { margin-bottom: 8px; }
+.mb-md { margin-bottom: 16px; }
+.mb-lg { margin-bottom: 24px; }
+
+.p-xs { padding: 4px; }
+.p-sm { padding: 8px; }
+.p-md { padding: 16px; }
+.p-lg { padding: 24px; }
+
+/* ============================================
+   Glass Card Component
+   ============================================ */
+.card {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-radius: 20px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  padding: 16px;
+  margin-bottom: 12px;
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.card:active {
+  transform: scale(0.98);
+  box-shadow: 0 4px 16px 0 rgba(0, 0, 0, 0.08);
+  background: rgba(255, 255, 255, 0.8);
+}
+
+/* ============================================
+   Button Component - Glassmorphism
+   ============================================ */
+.btn {
+  display: block;
+  width: 100%;
+  height: 50px;
+  line-height: 50px;
+  text-align: center;
+  border-radius: 16px;
+  font-size: 17px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  transition: all 0.3s ease;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.btn-primary {
+  background: rgba(255, 255, 255, 0.7);
+  color: #1a1a1a;
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.1);
+}
+
+.btn-primary:active {
+  background: rgba(255, 255, 255, 0.8);
+  transform: scale(0.98);
+  box-shadow: 0 4px 16px 0 rgba(0, 0, 0, 0.08);
+}
+
+.btn-secondary {
+  background: rgba(255, 255, 255, 0.6);
+  color: #1a1a1a;
+}
+
+.btn-secondary:active {
+  background: rgba(255, 255, 255, 0.7);
+  transform: scale(0.98);
+}
+
+.btn-ghost {
+  background: rgba(255, 255, 255, 0.5);
+  color: #1a1a1a;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+}
+
+.btn-ghost:active {
+  background: rgba(255, 255, 255, 0.6);
+}
+
+/* ============================================
+   Input Component - Glassmorphism
+   ============================================ */
+.input {
+  width: 100%;
+  height: 50px;
+  padding: 0 16px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 16px;
+  font-size: 15px;
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  color: #1a1a1a;
+  transition: all 0.3s ease;
+}
+
+.input:focus {
+  background: rgba(255, 255, 255, 0.8);
+  border-color: rgba(0, 0, 0, 0.2);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.1);
+}
+
+.input::placeholder {
+  color: rgba(26, 26, 26, 0.6);
+}
+
+/* ============================================
+   Icon Styles
+   ============================================ */
+.icon {
+  width: 24px;
+  height: 24px;
+  vertical-align: middle;
+}
+
+/* ============================================
+   Loading State
+   ============================================ */
+.loading {
+  padding: 32px 0;
+  text-align: center;
+  color: rgba(26, 26, 26, 0.8);
+}
+
+/* ============================================
+   Empty State - Glassmorphism
+   ============================================ */
+.empty {
+  padding: 48px 0;
+  text-align: center;
+  color: rgba(26, 26, 26, 0.6);
+}
+
+.empty-icon {
+  width: 80px;
+  height: 80px;
+  margin: 0 auto 16px;
+  opacity: 0.5;
+}
+
+/* ============================================
+   Message Styles
+   ============================================ */
+.error-message {
+  color: #ff6b6b;
+  font-size: 13px;
+  margin-top: 4px;
+  font-weight: 500;
+}
+
+.success-message {
+  color: #51cf66;
+  font-size: 13px;
+  margin-top: 4px;
+  font-weight: 500;
+}
+
+/* ============================================
+   Hide Scrollbar
+   ============================================ */
+::-webkit-scrollbar {
+  display: none;
+  width: 0;
+  height: 0;
+  background: transparent;
+}
+
+/* ============================================
+   Safe Area Support
+   ============================================ */
+.safe-area-bottom {
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+.safe-area-top {
+  padding-top: env(safe-area-inset-top);
+}
+
+/* ============================================
+   Glassmorphism Text Styles
+   ============================================ */
+.text-title {
+  font-size: 28px;
+  font-weight: 700;
+  color: #1a1a1a;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+}
+
+.text-headline {
+  font-size: 20px;
+  font-weight: 600;
+  color: #1a1a1a;
+  letter-spacing: -0.01em;
+}
+
+.text-body {
+  font-size: 15px;
+  font-weight: 400;
+  color: #1a1a1a;
+  line-height: 1.47059;
+}
+
+.text-caption {
+  font-size: 13px;
+  font-weight: 400;
+  color: rgba(26, 26, 26, 0.7);
+  line-height: 1.38462;
+}
+
+.text-footnote {
+  font-size: 11px;
+  font-weight: 400;
+  color: rgba(26, 26, 26, 0.6);
+  line-height: 1.33333;
+}

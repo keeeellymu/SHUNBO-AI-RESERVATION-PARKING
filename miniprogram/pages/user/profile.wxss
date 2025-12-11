@@ -1,0 +1,309 @@
+/* pages/user/profile.wxss - Glassmorphism Design Style */
+
+page {
+  background: linear-gradient(135deg, #f5f5f7 0%, #ffffff 100%);
+  background-attachment: fixed;
+  min-height: 100vh;
+}
+
+.profile-container {
+  padding: 16px;
+  padding-bottom: 80px; /* 为底部导航栏留出空间 */
+  background: transparent;
+  min-height: calc(100vh - 60px);
+  box-sizing: border-box;
+}
+
+/* 1. 用户信息卡片 - Glassmorphism */
+.user-card {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-radius: 20px;
+  padding: 24px 20px;
+  margin-top: 16px;
+  color: #1a1a1a;
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+}
+
+.avatar {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.8);
+  background-color: rgba(255, 255, 255, 0.9);
+  margin-right: 16px;
+  box-shadow: 0 4px 16px 0 rgba(0, 0, 0, 0.1);
+}
+
+.info-content {
+  flex: 1;
+}
+
+.nickname {
+  font-size: 20px;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin-bottom: 4px;
+  letter-spacing: -0.01em;
+}
+
+.user-id {
+  font-size: 12px;
+  color: rgba(26, 26, 26, 0.7);
+  margin-bottom: 6px;
+  font-weight: 500;
+}
+
+.vip-tag {
+  display: inline-block;
+  background-color: rgba(26, 26, 26, 0.1);
+  font-size: 10px;
+  padding: 2px 8px;
+  border-radius: 10px;
+  color: rgba(26, 26, 26, 0.8);
+  font-weight: 500;
+}
+
+.arrow-icon {
+  font-size: 18px;
+  color: rgba(26, 26, 26, 0.6);
+  opacity: 0.8;
+}
+
+.sub-text {
+  font-size: 14px;
+  color: rgba(26, 26, 26, 0.7);
+  font-weight: 500;
+}
+
+/* 2. 收藏停车场区域 - Glassmorphism */
+.favorites-section {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-radius: 20px;
+  padding: 16px;
+  margin-top: 24px;
+  margin-bottom: 16px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.1);
+}
+
+.section-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: #1a1a1a;
+  margin-bottom: 16px;
+  padding-left: 4px;
+  border-left: 3px solid rgba(26, 26, 26, 0.2);
+  letter-spacing: -0.01em;
+}
+
+.favorites-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.favorite-item {
+  width: calc(33.333% - 8px);
+  position: relative;
+  border-radius: 12px;
+  overflow: hidden;
+  background-color: rgba(255, 255, 255, 0.5);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease;
+}
+
+.favorite-item:active {
+  transform: scale(0.98);
+  box-shadow: 0 4px 16px 0 rgba(0, 0, 0, 0.08);
+}
+
+.favorite-image {
+  width: 100%;
+  height: 100px;
+  border-radius: 12px;
+  object-position: center center;
+}
+
+/* 广州塔图片显示右侧部分 */
+.favorite-image[src*="cantontower"] {
+  object-position: right center;
+}
+
+.favorite-info {
+  padding: 8px 4px;
+  display: flex;
+  flex-direction: column;
+}
+
+.favorite-name {
+  font-size: 12px;
+  color: #1a1a1a;
+  font-weight: 500;
+  margin-bottom: 4px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.favorite-address {
+  font-size: 10px;
+  color: rgba(26, 26, 26, 0.6);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.empty-favorites {
+  padding: 40px 20px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.empty-text {
+  font-size: 14px;
+  color: rgba(26, 26, 26, 0.7);
+  margin-bottom: 8px;
+  font-weight: 500;
+}
+
+.empty-hint {
+  font-size: 12px;
+  color: rgba(26, 26, 26, 0.5);
+}
+
+.view-more {
+  text-align: center;
+  padding: 12px 0;
+  color: rgba(26, 26, 26, 0.8);
+  font-size: 14px;
+  border-top: 1px solid rgba(0, 0, 0, 0.05);
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.view-more:active {
+  color: #1a1a1a;
+}
+
+/* 3. 功能菜单区域 - Glassmorphism */
+.menu-section {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-radius: 20px;
+  padding: 16px;
+  margin-bottom: 16px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.1);
+}
+
+.function-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: flex-start;
+}
+
+.function-item {
+  width: calc(33.333% - 14px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 12px 0;
+  transition: all 0.3s ease;
+}
+
+.function-item:active {
+  transform: scale(0.95);
+}
+
+.function-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  margin-bottom: 8px;
+  box-shadow: 0 4px 16px 0 rgba(0, 0, 0, 0.08);
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease;
+}
+
+.function-icon-img {
+  width: 32px;
+  height: 32px;
+}
+
+.function-item:active .function-icon {
+  box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.06);
+}
+
+.function-label {
+  font-size: 13px;
+  color: #1a1a1a;
+  text-align: center;
+  font-weight: 500;
+}
+
+/* 4. 列表菜单 - Glassmorphism */
+.list-menu {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-radius: 20px;
+  overflow: hidden;
+  margin-bottom: 16px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.1);
+}
+
+.list-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease;
+}
+
+.list-item:last-child {
+  border-bottom: none;
+}
+
+.list-item:active {
+  background-color: rgba(255, 255, 255, 0.8);
+}
+
+.item-left {
+  font-size: 15px;
+  color: #1a1a1a;
+  font-weight: 500;
+}
+
+.item-right {
+  color: rgba(26, 26, 26, 0.4);
+  font-size: 14px;
+  font-weight: 600;
+}
+

@@ -1,0 +1,57 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/login/login",
+    "pages/parking/list",
+    "pages/parking/detail",
+    "pages/reservation/index",
+    "pages/reservation/detail",
+    "pages/user/profile",
+    "pages/user/reservations"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#1890ff",
+    "navigationBarTitleText": "智能停车场",
+    "navigationBarTextStyle": "white"
+  },
+  "tabBar": {
+    "color": "#999999",
+    "selectedColor": "#1890ff",
+    "backgroundColor": "#ffffff",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "首页",
+        "iconPath": "images/home.png",
+        "selectedIconPath": "images/home-active.png"
+      },
+      {
+        "pagePath": "pages/parking/list",
+        "text": "停车场",
+        "iconPath": "images/parking.png",
+        "selectedIconPath": "images/parking-active.png"
+      },
+      {
+        "pagePath": "pages/reservation/index",
+        "text": "预约",
+        "iconPath": "images/spaces.png",
+        "selectedIconPath": "images/spaces-active.png"
+      },
+      {
+        "pagePath": "pages/user/profile",
+        "text": "我的",
+        "iconPath": "images/my.png",
+        "selectedIconPath": "images/my-active.png"
+      }
+    ]
+  },
+  "style": "v2",
+  "sitemapLocation": "sitemap.json",
+  "permission": {
+    "scope.userLocation": {
+      "desc": "需要获取您的位置信息以推荐附近的停车场"
+    }
+  },
+  "requiredPrivateInfos": ["getLocation"]
+}

@@ -1,0 +1,66 @@
+<view class="profile-container">
+  
+  <view class="user-card">
+    <view class="user-info" wx:if="{{userInfo}}" bindtap="goToProfileEdit">
+      <image class="avatar" src="{{userInfo.avatarUrl || '/images/my.png'}}" mode="aspectFill"></image>
+      <view class="info-content">
+        <view class="nickname">{{userInfo.nickName || '微信用户'}}</view>
+        <view class="user-id">ID: {{userInfo.id || '未登录'}}</view>
+        <view class="vip-tag">普通会员</view>
+      </view>
+      <view class="arrow-icon">></view>
+    </view>
+    
+    <view class="user-info" wx:else bindtap="handleLogin">
+      <image class="avatar" src="/images/my.png"></image>
+      <view class="info-content">
+        <view class="nickname">点击登录</view>
+        <view class="sub-text">登录后体验更多功能</view>
+      </view>
+    </view>
+  </view>
+  
+  <view class="favorites-section">
+    <view class="section-title">收藏停车场</view>
+    <view class="favorites-grid" wx:if="{{favoriteParkings && favoriteParkings.length > 0}}">
+      <view class="favorite-item" wx:for="{{favoriteParkings}}" wx:key="id" bindtap="goToParkingDetail" data-id="{{item.id}}">
+        <image class="favorite-image" src="{{item.imageUrl || '/images/parking.png'}}" mode="aspectFill"></image>
+        <view class="favorite-info">
+          <text class="favorite-name">{{item.name}}</text>
+          <text class="favorite-address">{{item.address}}</text>
+        </view>
+      </view>
+    </view>
+    <view class="empty-favorites" wx:else>
+      <text class="empty-text">暂无收藏的停车场</text>
+      <text class="empty-hint">去停车场列表收藏喜欢的停车场吧</text>
+    </view>
+    <view class="view-more" wx:if="{{favoriteParkings && favoriteParkings.length > 0}}" bindtap="goToFavorites">
+      <text>查看更多 ></text>
+    </view>
+  </view>
+  
+  <view class="menu-section">
+    <view class="section-title">我的功能</view>
+    <view class="function-grid">
+      <view class="function-item" bindtap="goToMyLicensePlate">
+        <view class="function-icon">
+          <image class="function-icon-img" src="/images/car-icon.svg" mode="aspectFit"></image>
+        </view>
+        <text class="function-label">我的车牌</text>
+      </view>
+      <view class="function-item" bindtap="contactSupport">
+        <view class="function-icon">
+          <image class="function-icon-img" src="/images/customer-service-icon.svg" mode="aspectFit"></image>
+        </view>
+        <text class="function-label">客服中心</text>
+      </view>
+      <view class="function-item" bindtap="aboutUs">
+        <view class="function-icon">
+          <image class="function-icon-img" src="/images/help-question-icon.svg" mode="aspectFit"></image>
+        </view>
+        <text class="function-label">关于瞬泊</text>
+      </view>
+    </view>
+  </view>
+</view>

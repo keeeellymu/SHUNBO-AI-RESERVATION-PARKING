@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>停车场详情</title>
+    <style>
+        /* CSS 变量 (定义主色调) */
+        :root {
+            --primary-blue: #007AFF;
+            --light-blue-bg: #EBF5FF;
+            --dark-text: #333333;
+            --light-text: #757575;
+            --bg-white: #FFFFFF;
+            --bg-gray: #F4F4F9;
+            --border-color: #EEEEEE;
+        }
+
+        /* 全局重置和基础样式 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-gray);
+            color: var(--dark-text);
+        }
+
+        /* 模拟App容器 */
+        .app-container {
+            max-width: 420px;
+            margin: 0 auto;
+            min-height: 100vh;
+            background-color: var(--bg-white);
+            position: relative;
+            /* 为底部固定栏留出空间 */
+            padding-bottom: 100px;
+        }
+
+        /* 1. 顶部导航栏 */
+        .nav-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px;
+            background-color: var(--primary-blue);
+            color: var(--bg-white);
+        }
+        .nav-bar span {
+            font-size: 1.2rem;
+            cursor: pointer;
+        }
+        .nav-bar .title {
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+
+        /* 主内容区域 */
+        main {
+            padding: 16px;
+        }
+
+        /* 2. 停车场核心信息卡 */
+        .info-card {
+            padding: 16px;
+            background: var(--bg-white);
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            margin-bottom: 24px;
+        }
+        .info-card h2 {
+            font-size: 1.6rem;
+            margin-bottom: 8px;
+        }
+        .info-card .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+        .info-card .tags span {
+            font-size: 0.8rem;
+            padding: 4px 8px;
+            border-radius: 6px;
+            background-color: var(--light-blue-bg);
+            color: var(--primary-blue);
+            border: 1px solid var(--primary-blue);
+            font-weight: 500;
+        }
+        .info-card .info-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--light-text);
+            margin-top: 8px;
+        }
+        .info-card .info-item .icon {
+            color: var(--primary-blue);
+            font-size: 1.1rem;
+        }
+
+        /* 3. 实时车位概览 (甜甜圈图) */
+        .availability {
+            text-align: center;
+            margin-bottom: 24px;
+        }
+        .availability h3 {
+            font-size: 1.2rem;
+            margin-bottom: 16px;
+        }
+        .donut-chart-container {
+            position: relative;
+            width: 160px;
+            height: 160px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .donut-chart {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            /* 关键: 86/200 = 43%. 
+               conic-gradient(颜色1 0% 43%, 颜色2 43% 100%) */
+            background: conic-gradient(
+                var(--primary-blue) 0% 43%, 
+                var(--bg-gray) 43% 100%
+            );
+        }
+        .chart-info {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 130px;
+            height: 130px;
+            background: var(--bg-white);
+            border-radius: 50%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        .chart-info span:first-child {
+            font-size: 0.9rem;
+            color: var(--light-text);
+        }
+        .chart-info .count {
+            font-size: 2.8rem;
+            font-weight: 700;
+            color: var(--primary-blue);
+            line-height: 1.2;
+        }
+        .chart-info span:last-child {
+            font-size: 0.9rem;
+            color: var(--light-text);
+        }
+
+        /* 4. 楼层详情与选择 */
+        .level-selection h3 {
+            font-size: 1.2rem;
+            margin-bottom: 16px;
+        }
+        .level-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        .level-list li {
+            display: flex;
+            align-items: center;
+            padding: 16px;
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        .level-list li:hover {
+            background-color: var(--bg-gray);
+        }
+        .level-list .level-info {
+            flex-grow: 1;
+        }
+        .level-list .level-info strong {
+            font-size: 1.1rem;
+            display: block;
+            margin-bottom: 4px;
+        }
+        .level-list .level-info span {
+            font-size: 0.9rem;
+            color: var(--light-text);
+        }
+        .level-list .progress-bar {
+            width: 80px;
+            height: 6px;
+            background-color: var(--bg-gray);
+            border-radius: 3px;
+            overflow: hidden;
+            margin: 0 16px;
+        }
+        .level-list .progress {
+            height: 100%;
+            background-color: var(--primary-blue);
+            border-radius: 3px;
+        }
+        .level-list .arrow {
+            font-size: 1.5rem;
+            color: var(--light-text);
+        }
+
+        /* 5. 收费标准 */
+        .pricing {
+            margin-top: 24px;
+        }
+        .pricing h3 {
+            font-size: 1.2rem;
+            margin-bottom: 16px;
+        }
+        .pricing ul {
+            list-style: none;
+        }
+        .pricing li {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 12px;
+            font-size: 0.95rem;
+        }
+        .pricing li .icon {
+            font-size: 1.2rem;
+            width: 20px;
+            text-align: center;
+        }
+
+        /* 6. 底部悬浮操作栏 */
+        .sticky-footer {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px;
+            background: var(--bg-white);
+            border-top: 1px solid var(--border-color);
+            box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.05);
+        }
+        .footer-action {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            cursor: pointer;
+            color: var(--primary-blue);
+        }
+        .footer-action .icon {
+            font-size: 1.6rem;
+        }
+        .footer-action span {
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+        .cta-button {
+            flex-grow: 1;
+            margin-left: 20px;
+            padding: 14px 20px;
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--bg-white);
+            background-color: var(--primary-blue);
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+        .cta-button:hover {
+            opacity: 0.9;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="app-container">
+
+        <header class="nav-bar">
+            <span class="back-btn">&lt;</span>
+            <span class="title">停车场详情</span>
+            <span class="favorite-btn">☆</span>
+        </header>
+
+        <main>
+            <section class="info-card">
+                <h2>华林花园</h2>
+                <div class="tags">
+                    <span>室外</span>
+                    <span>24小时</span>
+                    <span>支持预约</span>
+                </div>
+                <div class="info-item">
+                    <span class="icon">📍</span>
+                    <span>厦门市思明区莲前东路928号</span>
+                </div>
+                <div class="info-item">
+                    <span class="icon">🚗</span>
+                    <span>距您 1.2 公里</span>
+                </div>
+            </section>
+
+            <section class="availability">
+                <h3>实时车位</h3>
+                <div class="donut-chart-container">
+                    <div class="donut-chart"></div>
+                    <div class="chart-info">
+                        <span>剩余</span>
+                        <div class="count">86</div>
+                        <span>总车位 200</span>
+                    </div>
+                </div>
+            </section>
+
+            <section class="level-selection">
+                <h3>楼层余位</h3>
+                <ul class="level-list">
+                    <li onclick="alert('进入地面车位图')">
+                        <div class="level-info">
+                            <strong>地面 (Ground Floor)</strong>
+                            <span>空闲 20 / 总 50</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress" style="width: 40%;"></div>
+                        </div>
+                        <span class="arrow">&gt;</span>
+                    </li>
+                    <li onclick="alert('进入B1车位图')">
+                        <div class="level-info">
+                            <strong>B1 (地下一层)</strong>
+                            <span>空闲 36 / 总 75</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress" style="width: 48%;"></div>
+                        </div>
+                        <span class="arrow">&gt;</span>
+                    </li>
+                    <li onclick="alert('进入B2车位图')">
+                        <div class="level-info">
+                            <strong>B2 (地下二层)</strong>
+                            <span>空闲 30 / 总 75</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress" style="width: 40%;"></div>
+                        </div>
+                        <span class="arrow">&gt;</span>
+                    </li>
+                </ul>
+            </section>
+
+            <section class="pricing">
+                <h3>收费标准</h3>
+                <ul>
+                    <li><span class="icon">☀️</span><strong>日间 (08:00 - 20:00):</strong> 5元 / 小时</li>
+                    <li><span class="icon">🌙</span><strong>夜间 (20:00 - 08:00):</strong> 2元 / 小时</li>
+                    <li><span class="icon">🅿️</span><strong>24小时封顶:</strong> 40元</li>
+                    <li><span class="icon">⏳</span><strong>免费停车:</strong> 15分钟内免费</li>
+                </ul>
+            </section>
+
+        </main>
+
+        <footer class="sticky-footer">
+            <div class="footer-action" onclick="alert('打开导航')">
+                <span class="icon">🗺️</span>
+                <span>到这去</span>
+            </div>
+            <button class="cta-button" onclick="alert('进入预约流程')">
+                立即预约
+            </button>
+        </footer>
+
+    </div>
+
+</body>
+</html>

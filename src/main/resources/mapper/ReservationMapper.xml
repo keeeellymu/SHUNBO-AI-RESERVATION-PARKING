@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.parking.dao.ReservationMapper">
+    
+    <!-- 查询用户的预约列表 -->
+    <select id="selectByUserId" resultType="com.parking.model.entity.ReservationEntity">
+        <bind name="offset" value="(pageNum - 1) * pageSize" />
+        <![CDATA[
+        SELECT * FROM reservation 
+        WHERE user_id = #{userId}
+        ORDER BY created_at DESC
+        LIMIT #{pageSize} OFFSET #{offset}
+        ]]>
+    </select>
+    
+    <!-- 根据条件查询预约列表 -->
+    <select id="selectByCondition" parameterType="com.parking.model.dto.ReservationQueryDTO" resultType="com.parking.model.entity.ReservationEntity">
+        <![CDATA[SELECT * FROM reservation WHERE 1 = 1]]>
+        <if test="userId != null">
+            <![CDATA[ AND user_id = #{userId}]]>
+        </if>
+        <if test="parkingSpaceId != null">
+            <![CDATA[ AND parking_space_id = #{parkingSpaceId}]]>
+        </if>
+        <if test="parkingId != null">
+            <![CDATA[ AND parking_id = #{parkingId}]]>
+        </if>
+        <if test="status != null">
+            <![CDATA[ AND status = #{status}]]>
+        </if>
+        <if test="reservationNo != null and reservationNo != ''">
+            <![CDATA[ AND reservation_no = #{reservationNo}]]>
+        </if>
+        <if test="vehicleInfo != null and vehicleInfo != ''">
+            <![CDATA[ AND vehicle_info LIKE CONCAT('%', #{vehicleInfo}, '%')]]>
+        </if>
+        <if test="startTimeFrom != null">
+            <![CDATA[ AND start_time >= #{startTimeFrom}]]>
+        </if>
+        <if test="startTimeTo != null">
+            <![CDATA[ AND start_time <= #{startTimeTo}]]>
+        </if>
+        <if test="endTimeFrom != null">
+            <![CDATA[ AND end_time >= #{endTimeFrom}]]>
+        </if>
+        <if test="endTimeTo != null">
+            <![CDATA[ AND end_time <= #{endTimeTo}]]>
+        </if>
+        <![CDATA[ ORDER BY created_at DESC]]>
+    </select>
+    
+    <!-- 查询车位在指定时间段内的预约 -->
+    <select id="checkOverlappingReservation" resultType="java.lang.Integer">
+        <![CDATA[
+        SELECT COUNT(*) FROM reservation 
+        WHERE parking_space_id = #{parkingSpaceId}
+        AND status = 0
+        AND (
+            (start_time < #{endTime} AND end_time > #{startTime})
+        )
+        ]]>
+    </select>
+    
+    <!-- 查询车位在指定时间段内的预约（排除特定预约） -->
+    <select id="checkOverlappingReservationExclude" resultType="java.lang.Integer">
+        <![CDATA[
+        SELECT COUNT(*) FROM reservation 
+        WHERE parking_space_id = #{parkingSpaceId}
+        AND status = 0
+        AND id != #{excludeId}
+        AND (
+            (start_time < #{endTime} AND end_time > #{startTime})
+        )
+        ]]>
+    </select>
+    
+    <!-- 更新预约状态（使用乐观锁） -->
+    <update id="updateStatusWithVersion">
+        UPDATE reservation 
+        SET status = #{status},
+            version = version + 1,
+            updated_at = NOW()
+        WHERE id = #{id} AND version = #{version}
+    </update>
+    
+    <!-- 更新超时预约 -->
+    <update id="updateTimeoutReservations">
+        <![CDATA[
+        UPDATE reservation 
+        SET status = 3,  -- TIMEOUT
+            updated_at = NOW()
+        WHERE status = 0  -- PENDING
+        AND end_time < #{currentTime}
+        ]]>
+    </update>
+    
+    <!-- 根据预约编号查询预约 -->
+    <select id="selectByReservationNo" parameterType="java.lang.String" resultType="com.parking.model.entity.ReservationEntity">
+        SELECT * FROM reservation 
+        WHERE reservation_no = #{reservationNo}
+    </select>
+    
+    <!-- 查询停车场信息 -->
+    <!-- 优化：实时计算可用车位数，而不是依赖parking_lot表中的available_spaces字段 -->
+    <select id="selectParkingLotInfo" parameterType="java.lang.Long" resultType="java.util.HashMap">
+        SELECT 
+            pl.id,
+            pl.name,
+            pl.address,
+            pl.district,
+            pl.hourly_rate AS hourly_rate,
+            pl.total_spaces AS total_spaces,
+            COALESCE((
+                SELECT COUNT(*) 
+                FROM parking_space ps 
+                WHERE ps.parking_id = pl.id 
+                AND (ps.status = 'AVAILABLE' OR ps.state = 0)
+                AND ps.is_available = 1
+            ), 0) AS available_spaces,
+            pl.status,
+            pl.operating_hours AS operating_hours,
+            pl.longitude,
+            pl.latitude
+        FROM parking_lot pl
+        WHERE pl.id = #{parkingId}
+        LIMIT 1
+    </select>
+    
+    <!-- 查询所有停车场列表（用于附近停车场接口） -->
+    <!-- 优化：实时计算可用车位数，而不是依赖parking_lot表中的available_spaces字段 -->
+    <select id="selectAllParkingLots" resultType="java.util.HashMap">
+        SELECT 
+            pl.id,
+            pl.name,
+            pl.address,
+            pl.district,
+            pl.hourly_rate AS hourlyRate,
+            pl.total_spaces AS totalSpaces,
+            COALESCE((
+                SELECT COUNT(*) 
+                FROM parking_space ps 
+                WHERE ps.parking_id = pl.id 
+                AND (ps.status = 'AVAILABLE' OR ps.state = 0)
+                AND ps.is_available = 1
+            ), 0) AS availableSpaces,
+            pl.status,
+            pl.operating_hours AS operatingHours,
+            pl.longitude,
+            pl.latitude
+        FROM parking_lot pl
+        WHERE (pl.status IS NULL OR pl.status = '' OR pl.status = 'open' OR pl.status = 'OPEN' OR pl.status = 1)
+        <if test="district != null and district != ''">
+            AND (
+                pl.district = #{district} 
+                OR pl.district LIKE CONCAT('%', #{district}, '%')
+                OR pl.address LIKE CONCAT('%', #{district}, '%')
+            )
+        </if>
+        ORDER BY pl.id ASC
+        LIMIT 1000
+    </select>
+    
+    <!-- 搜索停车场（根据名称或地址） -->
+    <!-- 优化：实时计算可用车位数，而不是依赖parking_lot表中的available_spaces字段 -->
+    <select id="searchParkingLots" resultType="java.util.HashMap">
+        SELECT 
+            pl.id,
+            pl.name,
+            pl.address,
+            pl.hourly_rate AS hourlyRate,
+            pl.total_spaces AS totalSpaces,
+            COALESCE((
+                SELECT COUNT(*) 
+                FROM parking_space ps 
+                WHERE ps.parking_id = pl.id 
+                AND (ps.status = 'AVAILABLE' OR ps.state = 0)
+                AND ps.is_available = 1
+            ), 0) AS availableSpaces,
+            pl.status,
+            pl.operating_hours AS operatingHours,
+            pl.longitude,
+            pl.latitude
+        FROM parking_lot pl
+        WHERE (pl.status = 'open' OR pl.status = 'OPEN' OR pl.status = 1 OR pl.status IS NULL OR pl.status = '')
+        AND (
+            pl.name LIKE CONCAT('%', #{keyword}, '%')
+            OR pl.address LIKE CONCAT('%', #{keyword}, '%')
+        )
+        ORDER BY pl.id ASC
+    </select>
+    
+    <!-- 更新停车场车位数（预约后减少） -->
+    <update id="decreaseParkingLotSpaces">
+        UPDATE parking_lot
+        SET available_spaces = GREATEST(0, available_spaces - 1),
+            total_spaces = GREATEST(0, total_spaces - 1),
+            updated_at = NOW()
+        WHERE id = #{parkingId}
+        AND available_spaces > 0
+        AND total_spaces > 0
+    </update>
+    
+    <!-- 更新停车场车位数（取消预约或支付成功后增加） -->
+    <update id="increaseParkingLotSpaces">
+        UPDATE parking_lot
+        SET available_spaces = available_spaces + 1,
+            total_spaces = total_spaces + 1,
+            updated_at = NOW()
+        WHERE id = #{parkingId}
+    </update>
+    
+    <!-- 查询用户最新一条未支付的预约（status = 1 且 payment_status = 0） -->
+    <select id="findLatestUnpaidReservationByUser" resultType="java.lang.Long">
+        SELECT id
+        FROM reservation
+        WHERE user_id = #{userId}
+          AND payment_status = 0
+          AND status = 1
+        ORDER BY updated_at DESC
+        LIMIT 1
+    </select>
+</mapper>

@@ -1,0 +1,335 @@
+/* pages/reservation/index.wxss - Glassmorphism Design Style */
+
+.container {
+  padding: 16px;
+  padding-bottom: 80px; /* 为底部导航栏留出空间 */
+  background: transparent;
+  min-height: calc(100vh - 60px); /* 减去导航栏高度 */
+  box-sizing: border-box;
+}
+
+/* ============================================
+   Header - Glassmorphism
+   ============================================ */
+.header {
+  margin-bottom: 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.title {
+  font-size: 28px;
+  font-weight: 700;
+  color: #1a1a1a;
+  letter-spacing: -0.02em;
+  margin: 0;
+  padding: 0;
+  flex: 1;
+}
+
+.clear-button {
+  padding: 8px 16px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+}
+
+.clear-button:active {
+  background: rgba(255, 255, 255, 0.9);
+  transform: scale(0.95);
+  box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.06);
+}
+
+.clear-button-text {
+  font-size: 13px;
+  font-weight: 500;
+  color: rgba(26, 26, 26, 0.8);
+}
+
+/* ============================================
+   Loading State - Glassmorphism
+   ============================================ */
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 80px 0;
+  color: rgba(26, 26, 26, 0.8);
+}
+
+.loading-spinner {
+  width: 40px;
+  height: 40px;
+  border: 4px solid rgba(26, 26, 26, 0.2);
+  border-top: 4px solid #1a1a1a;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-bottom: 16px;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.loading-text {
+  font-size: 15px;
+  color: rgba(26, 26, 26, 0.7);
+  font-weight: 500;
+}
+
+/* ============================================
+   Error State - Glassmorphism
+   ============================================ */
+.error-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 80px 20px;
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-radius: 20px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.1);
+}
+
+.error-image {
+  width: 120px;
+  height: 120px;
+  margin-bottom: 24px;
+  opacity: 0.6;
+}
+
+.error-text {
+  font-size: 15px;
+  color: rgba(26, 26, 26, 0.8);
+  margin-bottom: 24px;
+  text-align: center;
+  font-weight: 500;
+}
+
+.retry-button {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  color: #1a1a1a;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 16px;
+  padding: 12px 32px;
+  font-size: 15px;
+  font-weight: 600;
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.retry-button:active {
+  background: rgba(255, 255, 255, 0.8);
+  transform: scale(0.98);
+  box-shadow: 0 4px 16px 0 rgba(0, 0, 0, 0.08);
+}
+
+/* ============================================
+   Empty State - Glassmorphism
+   ============================================ */
+.empty-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 80px 20px;
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-radius: 20px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.1);
+}
+
+.empty-image {
+  width: 120px;
+  height: 120px;
+  margin-bottom: 24px;
+  opacity: 0.5;
+}
+
+.empty-text {
+  font-size: 15px;
+  color: rgba(26, 26, 26, 0.8);
+  margin-bottom: 24px;
+  text-align: center;
+  font-weight: 500;
+}
+
+.primary-button {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  color: #1a1a1a;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 16px;
+  padding: 12px 32px;
+  font-size: 15px;
+  font-weight: 600;
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.primary-button:active {
+  background: rgba(255, 255, 255, 0.8);
+  transform: scale(0.98);
+  box-shadow: 0 4px 16px 0 rgba(0, 0, 0, 0.08);
+}
+
+/* ============================================
+   Reservation List - Glassmorphism
+   ============================================ */
+.reservation-list {
+  margin-top: 16px;
+}
+
+.reservation-item {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-radius: 20px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  margin-bottom: 16px;
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.reservation-item:active {
+  transform: scale(0.98);
+  background: rgba(255, 255, 255, 0.8);
+  box-shadow: 0 4px 16px 0 rgba(0, 0, 0, 0.08);
+}
+
+/* ============================================
+   Item Header - Glassmorphism
+   ============================================ */
+.item-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.parking-name {
+  font-size: 17px;
+  font-weight: 600;
+  color: #1a1a1a;
+  letter-spacing: -0.01em;
+  flex: 1;
+}
+
+.status-tag {
+  padding: 6px 16px;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 16px 0 rgba(0, 0, 0, 0.08);
+}
+
+.status-text {
+  font-size: 12px;
+  font-weight: 600;
+  color: #1a1a1a;
+}
+
+/* 不同状态的样式 */
+.status-tag[data-status="待确认"],
+.status-tag[data-status="待使用"] {
+  background: rgba(255, 193, 7, 0.3);
+  border-color: rgba(255, 193, 7, 0.4);
+}
+
+.status-tag[data-status="已完成"],
+.status-tag[data-status="已确认"] {
+  background: rgba(81, 207, 102, 0.3);
+  border-color: rgba(81, 207, 102, 0.4);
+}
+
+.status-tag[data-status="已取消"],
+.status-tag[data-status="已过期"] {
+  background: rgba(255, 107, 107, 0.3);
+  border-color: rgba(255, 107, 107, 0.4);
+}
+
+/* 待支付：橙色底色的小标 */
+.status-tag[data-status="待支付"] {
+  background: rgba(255, 159, 67, 0.28);
+  border-color: rgba(255, 159, 67, 0.5);
+}
+
+/* ============================================
+   Item Content - Glassmorphism
+   ============================================ */
+.item-content {
+  margin-bottom: 16px;
+}
+
+.info-row {
+  display: flex;
+  align-items: center;
+  margin-bottom: 8px;
+  font-size: 14px;
+}
+
+.info-row:last-child {
+  margin-bottom: 0;
+}
+
+.label {
+  color: rgba(26, 26, 26, 0.6);
+  font-weight: 500;
+  margin-right: 8px;
+  min-width: 80px;
+}
+
+.value {
+  color: rgba(26, 26, 26, 0.9);
+  font-weight: 500;
+  flex: 1;
+}
+
+/* ============================================
+   Item Footer - Glassmorphism
+   ============================================ */
+.item-footer {
+  display: flex;
+  justify-content: flex-end;
+  padding-top: 12px;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.view-detail {
+  font-size: 13px;
+  color: rgba(26, 26, 26, 0.8);
+  font-weight: 500;
+}
+
+/* ============================================
+   Responsive Adjustments
+   ============================================ */
+@media screen and (min-width: 768px) {
+  .container {
+    padding: 24px;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  
+  .reservation-item {
+    padding: 24px;
+  }
+}

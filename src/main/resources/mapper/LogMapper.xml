@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.parking.dao.LogMapper">
+
+    <select id="selectErrorLogs" resultType="java.util.Map">
+        SELECT * FROM sys_log 
+        <where>
+            <if test="module != null and module != ''">
+                AND module = #{module}
+            </if>
+        </where>
+        ORDER BY create_time DESC 
+        LIMIT #{offset}, #{limit}
+    </select>
+    
+    <select id="countErrorLogs" resultType="int">
+        SELECT count(*) FROM sys_log 
+        <where>
+            <if test="module != null and module != ''">
+                AND module = #{module}
+            </if>
+        </where>
+    </select>
+
+    <insert id="insertLog" parameterType="java.util.Map">
+        INSERT INTO sys_log (module, message, content, create_time)
+        VALUES (#{module}, #{message}, #{content}, NOW())
+    </insert>
+
+</mapper>

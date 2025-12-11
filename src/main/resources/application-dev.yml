@@ -1,0 +1,55 @@
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/parking_db?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai&useSSL=false&connectTimeout=10000&socketTimeout=30000
+    username: root
+    password: 123456
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    hikari:
+      minimum-idle: 5
+      maximum-pool-size: 20
+      idle-timeout: 30000
+      connection-timeout: 10000  # 连接超时时间（毫秒），10秒
+      max-lifetime: 1800000      # 连接最大生存时间（毫秒），30分钟
+      pool-name: ParkingHikariCP
+  redis:
+    host: localhost
+    port: 6379
+    timeout: 3000
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+  type-aliases-package: com.parking.entity
+# 高德地图 (Geocoding - 地理编码)
+# 使用 Web端 Key
+amap:
+  api-key: 37a5d69a69d267e7d4ee32b21dd8b897
+
+# 微信配置
+wechat:
+  appid: test_wechat_appid
+  secret: test_wechat_secret_key
+  mch_id: test_wechat_mch_id
+
+# 支付配置
+payment:
+  wechat:
+    appid: test_wechat_appid
+    mchId: test_wechat_mch_id
+  timeout: 1800000
+
+# JWT配置
+jwt:
+  secret: test_jwt_secret_key
+  expiration: 3600
+
+# ===============================================
+# 新增：智能语音 API 配置
+# ===============================================
+# 讯飞星火大模型 (LLM + NLU)
+# 使用 Spark Ultra-32K 凭证
+iflytek:
+  spark:
+    appid: 7cd98dd6
+    api-key: 778da35a3baa3d16282719d195a5a83d
+    api-secret: NTBiNGFlNmFjZmFiZGVmNTU4YjlmNGY0
+    # 讯飞星火 v3.5 WSS 地址
+    chat-url: wss://spark-api.xf-yun.com/v3.5/chat

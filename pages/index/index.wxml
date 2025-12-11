@@ -1,0 +1,79 @@
+<!-- pages/index/index.wxml -->
+<view class="container">
+  <!-- 顶部搜索栏 -->
+  <view class="search-bar">
+    <view class="search-input">
+      <text class="icon-search">🔍</text>
+      <text class="placeholder">搜索停车场</text>
+    </view>
+  </view>
+
+  <!-- 轮播图 -->
+  <view class="banner">
+    <swiper indicator-dots="{{true}}" autoplay="{{true}}" interval="3000" duration="500">
+      <block wx:for="{{bannerList}}" wx:key="index">
+        <swiper-item>
+          <view class="banner-item" style="background-color: {{item.color}}">
+            <text>{{item.title}}</text>
+          </view>
+        </swiper-item>
+      </block>
+    </swiper>
+  </view>
+
+  <!-- 快捷入口 -->
+  <view class="quick-entry">
+    <view class="entry-item" bindtap="goToRealtime">
+      <view class="entry-icon">📍</view>
+      <text class="entry-text">实时车位</text>
+    </view>
+    <view class="entry-item" bindtap="goToReservation">
+      <view class="entry-icon">📝</view>
+      <text class="entry-text">预约停车</text>
+    </view>
+    <view class="entry-item" bindtap="goToMyReservations">
+      <view class="entry-icon">👤</view>
+      <text class="entry-text">我的预约</text>
+    </view>
+    <view class="entry-item" bindtap="goToSettings">
+      <view class="entry-icon">⚙️</view>
+      <text class="entry-text">设置</text>
+    </view>
+  </view>
+
+  <!-- 推荐停车场 -->
+  <view class="section">
+    <view class="section-header">
+      <text class="section-title">推荐停车场</text>
+      <view class="section-more" bindtap="goToParkingList">
+        <text>查看更多</text>
+        <text class="icon-arrow">›</text>
+      </view>
+    </view>
+    
+    <view class="parking-list">
+      <block wx:for="{{recommendedParkings}}" wx:key="id">
+        <view class="parking-item" bindtap="goToParkingDetail" data-id="{{item.id}}">
+          <view class="parking-info">
+            <view class="parking-name">{{item.name}}</view>
+            <view class="parking-address">{{item.address}}</view>
+            <view class="parking-meta">
+              <text class="distance">{{item.distance}}m</text>
+              <text class="price">¥{{item.pricePerHour}}/小时</text>
+            </view>
+          </view>
+          <view class="parking-status">
+            <view class="status-dot" style="background-color: {{item.availableSpaces > 0 ? '#52c41a' : '#ff4d4f'}}"></view>
+            <text class="status-text">{{item.availableSpaces > 0 ? '有车位' : '满位'}}</text>
+          </view>
+        </view>
+      </block>
+    </view>
+  </view>
+
+  <!-- 公告栏 -->
+  <view class="notice">
+    <text class="notice-icon">📢</text>
+    <text class="notice-text">{{announcement}}</text>
+  </view>
+</view>

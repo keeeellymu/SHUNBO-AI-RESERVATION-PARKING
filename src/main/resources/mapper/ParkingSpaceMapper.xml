@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.parking.dao.ParkingSpaceMapper">
+    
+    <select id="selectById" parameterType="java.lang.Long" resultType="com.parking.model.entity.ParkingSpaceEntity">
+        SELECT 
+            id,
+            space_number AS spaceNumber,
+            parking_id AS parkingId,
+            name,
+            location,
+            floor,
+            status,
+            type,
+            category,
+            state,
+            hourly_rate AS hourlyRate,
+            daily_rate AS dailyRate,
+            description,
+            image_url AS imageUrl,
+            is_available AS isAvailable,
+            is_disabled AS isDisabled,
+            version,
+            created_at AS createdAt,
+            updated_at AS updatedAt
+        FROM parking_space 
+        WHERE id = #{id}
+    </select>
+    
+    <select id="selectAvailableSpaces" parameterType="java.lang.Long" resultType="com.parking.model.entity.ParkingSpaceEntity">
+        SELECT 
+            id,
+            space_number AS spaceNumber,
+            parking_id AS parkingId,
+            name,
+            location,
+            floor,
+            status,
+            type,
+            category,
+            state,
+            hourly_rate AS hourlyRate,
+            daily_rate AS dailyRate,
+            description,
+            image_url AS imageUrl,
+            is_available AS isAvailable,
+            is_disabled AS isDisabled,
+            version,
+            created_at AS createdAt,
+            updated_at AS updatedAt
+        FROM parking_space 
+        WHERE parking_id = #{parkingId}
+        AND (state = 0 OR status = 'AVAILABLE' OR (status IS NULL AND state IS NULL))
+        AND (is_available = 1 OR is_available IS NULL)
+    </select>
+    
+    <update id="lockSpace" parameterType="java.lang.Long">
+        UPDATE parking_space 
+        SET status = 'RESERVED',
+            state = 1,
+            is_available = 0
+        WHERE id = #{spaceId} 
+        AND state = 0
+    </update>
+    
+    <update id="updateStatus">
+        UPDATE parking_space 
+        SET status = #{status}, 
+            updated_at = NOW() 
+        WHERE id = #{spaceId}
+    </update>
+    
+    <!-- 更新状态为可用 -->
+    <update id="updateToAvailable">
+        UPDATE parking_space 
+        SET state = 0,
+            status = 'AVAILABLE',
+            is_available = 1,
+            updated_at = NOW()
+        WHERE id = #{spaceId}
+        AND (state = 1 OR state = 2)
+    </update>
+    
+    <!-- 新增SQL语句 -->
+    
+    <!-- 查询可用车位列表（带条件） -->
+    <select id="selectAvailableSpacesByCondition" parameterType="com.parking.model.dto.ParkingSpaceQueryDTO" resultType="com.parking.model.entity.ParkingSpaceEntity">
+        SELECT 
+            id,
+            space_number AS spaceNumber,
+            parking_id AS parkingId,
+            name,
+            location,
+            floor,
+            status,
+            type,
+            category,
+            state,
+            hourly_rate AS hourlyRate,
+            daily_rate AS dailyRate,
+            description,
+            image_url AS imageUrl,
+            is_available AS isAvailable,
+            is_disabled AS isDisabled,
+            version,
+            created_at AS createdAt,
+            updated_at AS updatedAt
+        FROM parking_space 
+        WHERE 1 = 1
+        <if test="queryDTO.parkingId != null">
+            AND parking_id = #{queryDTO.parkingId}
+        </if>
+        <if test="queryDTO.floor != null and queryDTO.floor != ''">
+            AND floor = #{queryDTO.floor}
+        </if>
+        <if test="queryDTO.category != null">
+            AND category = #{queryDTO.category}
+        </if>
+        <if test="queryDTO.state != null">
+            AND state = #{queryDTO.state}
+        </if>
+        <if test="queryDTO.status != null and queryDTO.status != ''">
+            AND status = #{queryDTO.status}
+        </if>
+        <if test="queryDTO.isAvailable != null">
+            AND is_available = #{queryDTO.isAvailable}
+        </if>
+        <if test="queryDTO.isDisabled != null">
+            AND is_disabled = #{queryDTO.isDisabled}
+        </if>
+    </select>
+    
+    <!-- 更新车位状态（数字状态） -->
+    <update id="updateState" parameterType="map">
+        UPDATE parking_space 
+        SET state = #{newState}, 
+            <choose>
+                <when test="newState == 0">status = 'AVAILABLE'</when>
+                <when test="newState == 1">status = 'RESERVED'</when>
+                <when test="newState == 2">status = 'OCCUPIED'</when>
+            </choose>,
+            updated_at = NOW() 
+        WHERE id = #{id} AND state = #{oldState}
+    </update>
+    
+    <!-- 使用乐观锁更新车位状态 -->
+    <update id="updateStateWithVersion" parameterType="map">
+        UPDATE parking_space 
+        SET state = #{newState}, 
+            <choose>
+                <when test="newState == 0">status = 'AVAILABLE'</when>
+                <when test="newState == 1">status = 'RESERVED'</when>
+                <when test="newState == 2">status = 'OCCUPIED'</when>
+            </choose>,
+            version = version + 1,
+            updated_at = NOW() 
+        WHERE id = #{id} AND state = #{oldState} AND version = #{version}
+    </update>
+    
+    <!-- 根据车位编号查询车位 -->
+    <select id="selectBySpaceNumber" parameterType="java.lang.String" resultType="com.parking.model.entity.ParkingSpaceEntity">
+        SELECT 
+            id,
+            space_number AS spaceNumber,
+            parking_id AS parkingId,
+            name,
+            location,
+            floor,
+            status,
+            type,
+            category,
+            state,
+            hourly_rate AS hourlyRate,
+            daily_rate AS dailyRate,
+            description,
+            image_url AS imageUrl,
+            is_available AS isAvailable,
+            is_disabled AS isDisabled,
+            version,
+            created_at AS createdAt,
+            updated_at AS updatedAt
+        FROM parking_space 
+        WHERE space_number = #{spaceNumber}
+    </select>
+    
+    <!-- 根据楼层查询车位 -->
+    <select id="selectByFloor" parameterType="java.lang.String" resultType="com.parking.model.entity.ParkingSpaceEntity">
+        SELECT 
+            id,
+            space_number AS spaceNumber,
+            parking_id AS parkingId,
+            name,
+            location,
+            floor,
+            status,
+            type,
+            category,
+            state,
+            hourly_rate AS hourlyRate,
+            daily_rate AS DailyRate,
+            description,
+            image_url AS imageUrl,
+            is_available AS isAvailable,
+            is_disabled AS isDisabled,
+            version,
+            created_at AS createdAt,
+            updated_at AS updatedAt
+        FROM parking_space 
+        WHERE floor = #{floor}
+    </select>
+    
+    <!-- 统计当前系统中可用的空车位数量 -->
+    <select id="countAvailableSpaces" resultType="int">
+        SELECT COUNT(*)
+        FROM parking_space
+        WHERE (state = 0 OR status = 'AVAILABLE' OR (status IS NULL AND state IS NULL))
+          AND (is_available = 1 OR is_available IS NULL)
+    </select>
+</mapper>

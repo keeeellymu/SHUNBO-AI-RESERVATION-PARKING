@@ -1,0 +1,229 @@
+<svg width="390" height="800" xmlns="http://www.w3.org/2000/svg">
+  <!-- 定义渐变和滤镜 -->
+  <defs>
+    <!-- 主光晕渐变 -->
+    <linearGradient id="mainGlowGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="rgba(147,197,253,1)" />
+      <stop offset="100%" stop-color="rgba(103,232,249,1)" />
+    </linearGradient>
+    
+    <!-- 外层球体渐变 -->
+    <radialGradient id="outerSphereGradient" cx="50%" cy="50%" r="50%" fx="50%" fy="50%">
+      <stop offset="0%" stop-color="rgba(191,219,254,1)" />
+      <stop offset="50%" stop-color="rgba(165,243,252,0.5)" />
+      <stop offset="100%" stop-color="rgba(147,197,253,1)" />
+    </radialGradient>
+    
+    <!-- 核心光球渐变 -->
+    <radialGradient id="coreGlowGradient" cx="50%" cy="50%" r="50%" fx="50%" fy="50%">
+      <stop offset="0%" stop-color="rgba(96,165,250,1)" />
+      <stop offset="100%" stop-color="rgba(34,211,238,1)" />
+    </radialGradient>
+    
+    <!-- 光晕底座渐变 -->
+    <linearGradient id="glowBaseGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#DBEAFE" />
+      <stop offset="100%" stop-color="#CFFAFE" />
+    </linearGradient>
+    
+    <!-- 实体底座渐变 -->
+    <linearGradient id="solidBaseGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#BFDBFE" />
+      <stop offset="100%" stop-color="#A5F3FC" />
+    </linearGradient>
+    
+    <!-- 反光条渐变 -->
+    <linearGradient id="reflectionGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="rgba(255,255,255,0.2)" />
+      <stop offset="100%" stop-color="rgba(255,255,255,0)" />
+    </linearGradient>
+    
+    <!-- 高斯模糊滤镜 -->
+    <filter id="blur12" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="12" />
+    </filter>
+    
+    <filter id="blur7" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="7" />
+    </filter>
+    
+    <filter id="blur4" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="4" />
+    </filter>
+    
+    <!-- 蓝色网格图案 -->
+    <pattern id="blueGrid" width="60" height="60" patternUnits="userSpaceOnUse">
+      <path d="M60 0 L0 0 0 60" fill="none" stroke="rgba(37,99,235,0.3)" stroke-width="1" />
+    </pattern>
+    
+    <!-- 额外的动态效果滤镜 -->
+    <filter id="pulseGlow" x="-100%" y="-100%" width="300%" height="300%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="5" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+  </defs>
+  
+  <!-- 主容器 -->
+  <rect width="390" height="800" fill="#F8FAFC" />
+  
+  <!-- 水晶球容器 (相对定位) -->
+  <g transform="translate(67, 128)" opacity="1">
+    <!-- 内容定位层 -->
+    <g>
+      <!-- 外部光晕系统 - 增强动画 -->
+      <!-- 主光晕 - 增强脉冲效果 -->
+      <circle cx="128" cy="128" r="144" fill="url(#mainGlowGradient)" opacity="0.3" filter="url(#blur12)">
+        <animate attributeName="r" values="144;152;144;148;144" dur="4s" repeatCount="indefinite" ease="ease-in-out" />
+        <animate attributeName="opacity" values="0.3;0.35;0.3;0.25;0.3" dur="4s" repeatCount="indefinite" ease="ease-in-out" />
+      </circle>
+      
+      <!-- 次级光晕 - 双层旋转光环 -->
+      <circle cx="128" cy="128" r="128.5" fill="none" stroke="rgba(255,255,255,0.31)" stroke-width="2" stroke-dasharray="5,5">
+        <animateTransform attributeName="transform" type="rotate" from="0 128 128" to="360 128 128" dur="15s" repeatCount="indefinite" additive="sum" />
+      </circle>
+      
+      <!-- 新增外环光晕 -->
+      <circle cx="128" cy="128" r="160" fill="none" stroke="rgba(103,232,249,0.2)" stroke-width="1" stroke-dasharray="10,10">
+        <animateTransform attributeName="transform" type="rotate" from="0 128 128" to="-360 128 128" dur="20s" repeatCount="indefinite" additive="sum" />
+      </circle>
+      
+      <!-- 水晶球主体 - 增强动态效果 -->
+      <!-- 外层球体 - 不规则呼吸动画 -->
+      <circle cx="128" cy="128" r="112" fill="url(#outerSphereGradient)" stroke="rgba(255,255,255,0.19)" stroke-width="4" filter="drop-shadow(0px 8px 10px rgba(0,0,0,0.1))">
+        <animate attributeName="r" values="112;113;112;112.5;112" dur="4s" repeatCount="indefinite" ease="ease-in-out" />
+        <animate attributeName="cx" values="128;128.5;128;127.5;128" dur="5s" repeatCount="indefinite" ease="ease-in-out" />
+        <animate attributeName="cy" values="128;127.5;128;128.5;128" dur="5s" repeatCount="indefinite" ease="ease-in-out" />
+      </circle>
+      
+      <!-- 反光条 - 随球体轻微移动 -->
+      <ellipse cx="128" cy="128" rx="112" ry="4" fill="url(#reflectionGradient)" opacity="0.7">
+        <animate attributeName="cx" values="128;128.5;128;127.5;128" dur="5s" repeatCount="indefinite" ease="ease-in-out" />
+        <animate attributeName="ry" values="4;4.5;4;3.5;4" dur="3s" repeatCount="indefinite" ease="ease-in-out" />
+      </ellipse>
+      
+      <!-- 内部结构系统 - 增强动态 -->
+      <!-- 纹理层 - 旋转动画 -->
+      <circle cx="128" cy="128" r="108.5" fill="url(#blueGrid)" opacity="0.4" style="mix-blend-mode: overlay;">
+        <animateTransform attributeName="transform" type="rotate" from="0 128 128" to="360 128 128" dur="60s" repeatCount="indefinite" additive="sum" />
+      </circle>
+      
+      <!-- 核心光球 - 脉动效果和添加指定路径的蹦跳动画（四次跳跃后停3秒重复） -->
+      <circle cx="128" cy="128" r="64.5" fill="url(#coreGlowGradient)" opacity="0.6" filter="url(#blur4)">
+        <animate attributeName="r" values="64.5;67;64.5" dur="2.5s" repeatCount="indefinite" ease="ease-in-out" />
+        <animate attributeName="opacity" values="0.6;0.7;0.6" dur="2.5s" repeatCount="indefinite" ease="ease-in-out" />
+        <!-- 右上→中心→左上→中心→右上→中心→左上→中心→停留，无限重复 -->
+        <animate attributeName="cy" values="128;108;128;108;128;108;128;108;128" dur="9s" repeatCount="indefinite" keyTimes="0;0.1;0.2;0.3;0.4;0.5;0.6;0.7;1" keySplines="0.8,0,0.2,1;0.8,0,0.2,1;0.8,0,0.2,1;0.8,0,0.2,1;0.8,0,0.2,1;0.8,0,0.2,1;0.8,0,0.2,1;0,0,0,0" />
+        <animate attributeName="cx" values="128;140;128;116;128;140;128;116;128" dur="9s" repeatCount="indefinite" keyTimes="0;0.1;0.2;0.3;0.4;0.5;0.6;0.7;1" keySplines="0.8,0,0.2,1;0.8,0,0.2,1;0.8,0,0.2,1;0.8,0,0.2,1;0.8,0,0.2,1;0.8,0,0.2,1;0.8,0,0.2,1;0,0,0,0" />
+      </circle>
+      
+      <!-- 面部交互系统 - 增强表情动画 -->
+      <!-- 眼睛容器 - 与核心球体同步指定路径的蹦跳动画（四次跳跃后停3秒重复） -->
+      <g id="eyesGroup">
+        <animateTransform attributeName="transform" type="translate" values="96,116;108,96;96,116;82,96;96,116;108,96;96,116;82,96;96,116" dur="9s" repeatCount="indefinite" keyTimes="0;0.1;0.2;0.3;0.4;0.5;0.6;0.7;1" keySplines="0.8,0,0.2,1;0.8,0,0.2,1;0.8,0,0.2,1;0.8,0,0.2,1;0.8,0,0.2,1;0.8,0,0.2,1;0.8,0,0.2,1;0,0,0,0" additive="sum" />
+        <!-- 左眼组件 - 静态状态 -->
+        <circle cx="0" cy="0" r="12" fill="rgba(255,255,255,0.56)" />
+        <ellipse cx="0" cy="0" rx="6.5" ry="6" fill="#2563EB" />
+        
+        <!-- 右眼组件 - 静态状态 -->
+        <circle cx="40" cy="0" r="12" fill="rgba(255,255,255,0.56)" />
+        <ellipse cx="40" cy="0" rx="6.5" ry="6" fill="#2563EB" />
+        
+        <!-- 更开心的嘴巴表情 -->
+        <path d="M10,30 Q20,38 30,30" fill="none" stroke="rgba(37,99,235,1)" stroke-width="3" />
+      </g>
+      
+      <!-- 光点矩阵 - 增强移动和闪烁效果 -->
+      <!-- 光点1 - 轨迹动画 -->
+      <ellipse cx="57.5" cy="58" rx="4.5" ry="4" fill="#FFFFFF">
+        <animate attributeName="opacity" values="0.7;1;0.7" dur="1.5s" repeatCount="indefinite" begin="0s" />
+        <animate attributeName="cx" values="57.5;62;57.5;53;57.5" dur="4s" repeatCount="indefinite" ease="ease-in-out" />
+        <animate attributeName="cy" values="58;62;58;54;58" dur="4s" repeatCount="indefinite" ease="ease-in-out" />
+      </ellipse>
+      
+      <!-- 光点2 - 轨迹动画 -->
+      <ellipse cx="141.5" cy="76" rx="3.5" ry="3" fill="#FFFFFF">
+        <animate attributeName="opacity" values="0.7;1;0.7" dur="1.5s" repeatCount="indefinite" begin="0.5s" />
+        <animate attributeName="cx" values="141.5;145;141.5;138;141.5" dur="5s" repeatCount="indefinite" ease="ease-in-out" />
+        <animate attributeName="cy" values="76;80;76;72;76" dur="5s" repeatCount="indefinite" ease="ease-in-out" />
+      </ellipse>
+      
+      <!-- 光点3 - 轨迹动画 -->
+      <ellipse cx="157.5" cy="158" rx="4.5" ry="4" fill="#FFFFFF">
+        <animate attributeName="opacity" values="0.7;1;0.7" dur="1.5s" repeatCount="indefinite" begin="1s" />
+        <animate attributeName="cx" values="157.5;162;157.5;153;157.5" dur="4.5s" repeatCount="indefinite" ease="ease-in-out" />
+        <animate attributeName="cy" values="158;162;158;154;158" dur="4.5s" repeatCount="indefinite" ease="ease-in-out" />
+      </ellipse>
+      
+      <!-- 新增光点4 -->
+      <ellipse cx="98" cy="180" rx="3" ry="2.5" fill="#FFFFFF">
+        <animate attributeName="opacity" values="0.6;0.9;0.6" dur="2s" repeatCount="indefinite" begin="0.3s" />
+      </ellipse>
+      
+      <!-- 新增光点5 -->
+      <ellipse cx="180" cy="110" rx="2.5" ry="2" fill="#FFFFFF">
+        <animate attributeName="opacity" values="0.6;0.9;0.6" dur="1.8s" repeatCount="indefinite" begin="0.7s" />
+      </ellipse>
+      
+
+      
+      <!-- 底座支撑系统 - 增强动态 -->
+      <!-- 光晕底座 - 脉动效果 -->
+      <ellipse cx="128" cy="224" rx="64.5" ry="16" fill="url(#glowBaseGradient)" opacity="0.7" filter="url(#blur7)">
+        <animate attributeName="rx" values="64.5;68;64.5" dur="3s" repeatCount="indefinite" ease="ease-in-out" />
+        <animate attributeName="opacity" values="0.7;0.8;0.7" dur="3s" repeatCount="indefinite" ease="ease-in-out" />
+      </ellipse>
+      
+      <!-- 实体底座 -->
+      <rect x="71.5" y="240" width="113" height="16" rx="16" ry="16" fill="url(#solidBaseGradient)" filter="drop-shadow(0px 2px 4px rgba(0,0,0,0.1))">
+        <animate attributeName="x" values="71.5;70;71.5;73;71.5" dur="5s" repeatCount="indefinite" ease="ease-in-out" />
+        <animate attributeName="width" values="113;115;113;111;113" dur="5s" repeatCount="indefinite" ease="ease-in-out" />
+      </rect>
+      
+      <!-- 新增浮动元素 - 环绕球体的能量粒子 -->
+      <g id="energyParticles">
+        <!-- 能量粒子1 -->
+        <circle cx="128" cy="60" r="2" fill="rgba(103,232,249,0.8)">
+          <animate attributeName="cx" values="128;140;150;140;128" dur="8s" repeatCount="indefinite" ease="ease-in-out" />
+          <animate attributeName="cy" values="60;65;70;75;60" dur="8s" repeatCount="indefinite" ease="ease-in-out" />
+          <animate attributeName="opacity" values="0.8;0.4;0.8;0.6;0.8" dur="4s" repeatCount="indefinite" />
+        </circle>
+        
+        <!-- 能量粒子2 -->
+        <circle cx="128" cy="196" r="2" fill="rgba(147,197,253,0.8)">
+          <animate attributeName="cx" values="128;116;106;116;128" dur="7s" repeatCount="indefinite" ease="ease-in-out" />
+          <animate attributeName="cy" values="196;190;185;180;196" dur="7s" repeatCount="indefinite" ease="ease-in-out" />
+          <animate attributeName="opacity" values="0.8;0.6;0.8;0.4;0.8" dur="3.5s" repeatCount="indefinite" />
+        </circle>
+        
+        <!-- 能量粒子3 -->
+        <circle cx="196" cy="128" r="2" fill="rgba(96,165,250,0.8)">
+          <animate attributeName="cx" values="196;190;185;190;196" dur="6.5s" repeatCount="indefinite" ease="ease-in-out" />
+          <animate attributeName="cy" values="128;116;106;116;128" dur="6.5s" repeatCount="indefinite" ease="ease-in-out" />
+          <animate attributeName="opacity" values="0.8;0.5;0.8;0.7;0.8" dur="3.25s" repeatCount="indefinite" />
+        </circle>
+        
+        <!-- 能量粒子4 -->
+        <circle cx="60" cy="128" r="2" fill="rgba(34,211,238,0.8)">
+          <animate attributeName="cx" values="60;65;70;65;60" dur="7.5s" repeatCount="indefinite" ease="ease-in-out" />
+          <animate attributeName="cy" values="128;140;150;140;128" dur="7.5s" repeatCount="indefinite" ease="ease-in-out" />
+          <animate attributeName="opacity" values="0.8;0.7;0.8;0.5;0.8" dur="3.75s" repeatCount="indefinite" />
+        </circle>
+      </g>
+      
+      <!-- 新增响应式交互 - 鼠标悬停效果准备 -->
+      <!-- 注意：SVG直接在浏览器中可以添加JS实现交互，但这里只添加动画元素 -->
+      <circle cx="128" cy="128" r="112" fill="transparent" opacity="0" id="interactionZone">
+        <!-- 这个透明圆用于后续可能的交互扩展 -->
+      </circle>
+    </g>
+  </g>
+  
+  <!-- AI助手状态指示器 -->
+  <g transform="translate(20, 750)">
+    <rect x="0" y="0" width="120" height="30" rx="15" ry="15" fill="rgba(147,197,253,0.2)" stroke="rgba(37,99,235,0.3)" stroke-width="2" />
+    <text x="60" y="20" text-anchor="middle" fill="#2563EB" font-family="Arial, sans-serif" font-size="12">AI 助手已激活</text>
+    <circle cx="105" cy="15" r="4" fill="#10B981">
+      <animate attributeName="opacity" values="1;0.6;1" dur="2s" repeatCount="indefinite" />
+    </circle>
+  </g>
+</svg>

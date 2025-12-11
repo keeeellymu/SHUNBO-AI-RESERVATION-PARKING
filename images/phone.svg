@@ -1,0 +1,12 @@
+<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M17 1H7C5.89543 1 5 1.89543 5 3V21C5 22.1046 5.89543 23 7 23H17C18.1046 23 19 22.1046 19 21V3C19 1.89543 18.1046 1 17 1Z" stroke="#1AAD19" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <animate attributeName="stroke-width" values="2;2.2;2" dur="1.5s" repeatCount="indefinite"/>
+  </path>
+  <path d="M17 11L15 13L13 11" stroke="#0066CC" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <animate attributeName="stroke-dasharray" values="0,5;5,5" dur="1s" repeatCount="indefinite"/>
+  </path>
+  <path d="M11 17H13" stroke="#FF6B35" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <animate attributeName="x1" values="11;11.2;11" dur="0.8s" repeatCount="indefinite"/>
+    <animate attributeName="x2" values="13;12.8;13" dur="0.8s" repeatCount="indefinite"/>
+  </path>
+</svg>
